@@ -1,0 +1,11 @@
+# Ignore Node Mudles
+/node_modules
+
+# Ignore env variables
+/config/.env
+
+# Ignore images folder
+/img
+
+# Ignore OSX System files
+.DS_Store
