@@ -71,5 +71,3 @@ User.hasMany(Like);
 Like.belongsTo(User);
 
 module.exports = { sequelize, User, Post, Comment, Like };
-
-// module.exports = sequelize;
