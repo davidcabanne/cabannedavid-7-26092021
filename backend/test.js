@@ -1,14 +1,14 @@
 const { User } = require("./config/database");
 
-// (async function () {
-//   const user = await User.create({
-//     username: "davodu33",
-//     email: "davo@gmail.io",
-//     password: "toto",
-//   });
+(async function () {
+  const user = await User.create({
+    username: "davodu33",
+    email: "davo@gmail.io",
+    password: "toto",
+  });
 
-//   console.log(user);
-// })();
+  console.log(user);
+})();
 
 // (async function () {
 //   const user = await User.create({
@@ -35,7 +35,7 @@ const { User } = require("./config/database");
 //   console.log(users);
 // })();
 
-(async function () {
-  const user = await User.findOne({ where: { username: "Michel" } });
-  console.log(user);
-})();
+// (async function () {
+//   const user = await User.findOne({ where: { username: "Michel" } });
+//   console.log(user);
+// })();

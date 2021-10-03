@@ -62,7 +62,7 @@ server.on("error", errorHandler);
 server.on("listening", listeningHandler);
 
 (async function () {
-  await sequelize.sync({ force: true });
+  await sequelize.sync();
 
   // [=>] LISTEN Server on chosen port
   server.listen(port);

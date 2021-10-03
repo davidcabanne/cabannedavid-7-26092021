@@ -2,8 +2,7 @@
 // -
 const express = require("express");
 
-// const saucesRoutes = require("./routes/saucesRoutes");
-// const userRoutes = require("./routes/userRoutes");
+const userRoutes = require("./routes/userRoutes");
 
 // allows to access the file system paths
 const path = require("path");
@@ -65,9 +64,8 @@ app.use(helmet());
 // // middleware allows to download files in static folder
 // app.use("/images", express.static(path.join(__dirname, "images")));
 
-// // for this route => use *dirname*Routes
-// app.use("/api/sauces", saucesRoutes);
-// app.use("/api/auth", userRoutes);
+// for this route => use *dirname*Routes
+app.use("/users", userRoutes);
 
 app.use((req, res, next) => {
   console.log("Requête reçue !");
