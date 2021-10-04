@@ -112,7 +112,6 @@ exports.login = (req, res, next) => {
 
 // [=>] UPDATE PROFILE SECT.
 // -
-
 exports.updateOne = (req, res, next) => {
   console.log("=> UPDATE PROFILE Function");
 
