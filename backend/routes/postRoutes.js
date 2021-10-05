@@ -8,23 +8,23 @@ const router = express.Router();
 
 const postCtrl = require("../controllers/postCtrl");
 
-const auth = require("../middleware/auth");
+const authn = require("../middleware/authn");
 
 // [=>] Middlewares
 // -
 // GET requests
-router.get("/", postCtrl.findAll);
-router.get("/:id", postCtrl.findById);
-router.get("/user/:id", postCtrl.findByUser);
+router.get("/", authn, postCtrl.findAll);
+router.get("/:id", authn, postCtrl.findOne);
+router.get("/user/:id", authn, postCtrl.findByUser);
 
-// POST request => create post
-router.post("/", postCtrl.createOne);
+// // POST request => create post
+router.post("/", authn, postCtrl.createOne);
 
-// PUT request => update post
-router.put("/", postCtrl.updateOne);
+// // PUT request => update post
+router.put("/:id", authn, postCtrl.updateOne);
 
-// DELETE request => delete post
-router.delete("/:id", postCtrl.deleteOne);
+// // DELETE request => delete post
+router.delete("/:id", authn, postCtrl.deleteOne);
 
 // [=>] EXPORT Router
 // -

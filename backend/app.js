@@ -1,8 +1,10 @@
 // [=>] IMPORT SECT.
 // -
 const express = require("express");
+const cookieParser = require("cookie-parser");
 
 const userRoutes = require("./routes/userRoutes");
+const postRoutes = require("./routes/postRoutes");
 
 // allows to access the file system paths
 const path = require("path");
@@ -38,24 +40,12 @@ app.use((req, res, next) => {
 });
 
 // // Cookies options
-// const expiryDate = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
-// app.use(
-//   session({
-//     name: "session",
-//     secret: process.env.SECURE_SESS,
-//     cookie: {
-//       secure: true,
-//       httpOnly: true,
-//       domain: "http://localhost:3000",
-//       expires: expiryDate,
-//     },
-//     resave: true,
-//     saveUninitialized: true,
-//   })
-// );
 
 // for parsing body application/json
 app.use(express.json());
+
+// cookie Parser
+app.use(cookieParser());
 
 // Helmet middleware
 app.use(helmet());
@@ -64,8 +54,15 @@ app.use(helmet());
 // // middleware allows to download files in static folder
 // app.use("/images", express.static(path.join(__dirname, "images")));
 
+// jwt
+// app.get("*", checkUser);
+// app.get("/jwtid", requireAuth, (req, res) => {
+//   res.status(200).send(res.locals.user._id);
+// });
+
 // for this route => use *dirname*Routes
 app.use("/users", userRoutes);
+app.use("/posts", postRoutes);
 
 app.use((req, res, next) => {
   console.log("Requête reçue !");
@@ -89,3 +86,22 @@ app.use((req, res, next) => {
 // [=>] EXPORT App
 // -
 module.exports = app;
+
+// [=>] LEFTOVERS
+// -
+// // Cookies options
+// const expiryDate = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
+// app.use(
+//   session({
+//     name: "session",
+//     secret: process.env.SECURE_SESS,
+//     cookie: {
+//       secure: true,
+//       httpOnly: true,
+//       domain: "http://localhost:3000",
+//       expires: expiryDate,
+//     },
+//     resave: true,
+//     saveUninitialized: true,
+//   })
+// );

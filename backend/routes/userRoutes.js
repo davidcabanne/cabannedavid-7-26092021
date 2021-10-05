@@ -2,6 +2,7 @@
 // -
 const express = require("express");
 const checkPassword = require("../middleware/checkPassword");
+const authn = require("../middleware/authn");
 
 // [=>]  CREATE ROUTER
 // -
@@ -11,9 +12,6 @@ const userCtrl = require("../controllers/userCtrl.js");
 
 // [=>]  Middlewares
 // -
-// GET Requests
-router.get("/", userCtrl.findAll);
-router.get("/:id", userCtrl.findOne);
 
 // POST request => signUp
 router.post("/signup", checkPassword, userCtrl.signup);
@@ -21,11 +19,18 @@ router.post("/signup", checkPassword, userCtrl.signup);
 // POST request => logIn
 router.post("/login", userCtrl.login);
 
+// GET request => logOut function
+router.post("/logout", authn, userCtrl.logout);
+
+// GET Requests
+router.get("/", authn, userCtrl.findAll);
+router.get("/:id", authn, userCtrl.findOne);
+
 // PUT request => update user profile
-router.put("/", userCtrl.updateOne);
+router.put("/:id", authn, userCtrl.updateOne);
 
 // DELETE request => delete user
-router.delete("/:id", userCtrl.deleteOne);
+router.delete("/:id", authn, userCtrl.deleteOne);
 
 // [=>] EXPORT Router
 // -
