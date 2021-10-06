@@ -8,6 +8,7 @@ const router = express.Router();
 
 const postCtrl = require("../controllers/postCtrl");
 const commentCtrl = require("../controllers/commentCtrl");
+const likeCtrl = require("../controllers/likeCtrl");
 
 const authn = require("../middleware/authn");
 
@@ -36,6 +37,9 @@ router.put("/:id/comments/:commentId", authn, commentCtrl.updateOne);
 
 // COMMENT | DELETE request => delete post
 router.delete("/:id/comments/:commentId", authn, commentCtrl.deleteOne);
+
+// [=>] LIKES
+router.post("/:id/like", authn, likeCtrl.likePost);
 
 // [=>] EXPORT Router
 // -

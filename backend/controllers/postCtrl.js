@@ -1,7 +1,7 @@
 // [=>] IMPORT SECT.
 // -
 // User model
-const { User, Post, Comment } = require("../config/database");
+const { User, Post, Comment, Like } = require("../config/database");
 
 // dotEnv variables
 const dotEnv = require("dotenv").config({ path: "./config/.env" });
@@ -14,7 +14,7 @@ exports.findAll = async function (req, res, next) {
 
     const posts = await Post.findAll({
       order: [["createdAt", "DESC"]],
-      include: [{ model: User }, { model: Comment }],
+      include: [{ model: User }, { model: Comment }, { model: Like }],
     });
     res.status(200).json(posts);
   } catch (error) {
@@ -30,7 +30,9 @@ exports.findOne = async function (req, res, next) {
 
     let id = req.params.id;
 
-    const post = await Post.findByPk(id);
+    const post = await Post.findByPk(id, {
+      include: [{ model: Like }],
+    });
     res.status(200).json(post);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -46,7 +48,7 @@ exports.findByUser = async function (req, res, next) {
     const posts = await Post.findAll({
       where: { UserId: req.params.id },
       order: [["createdAt", "DESC"]],
-      include: [{ model: User }, { model: Comment }],
+      include: [{ model: User }, { model: Comment }, { model: Like }],
     });
     res.status(200).json(posts);
   } catch (error) {
