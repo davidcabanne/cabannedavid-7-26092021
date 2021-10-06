@@ -6,13 +6,22 @@ const express = require("express");
 // -
 const router = express.Router();
 
+// [=>] CONTROLLERS
+// -
 const postCtrl = require("../controllers/postCtrl");
 const commentCtrl = require("../controllers/commentCtrl");
 const likeCtrl = require("../controllers/likeCtrl");
 
+// [=>] AUTHENTIFICATION
+// -
 const authn = require("../middleware/authn");
 
+// [=>] MULTER
+// -
+const multer = require("../middleware/multer-config");
+
 // [=>] Middlewares
+// -
 // [=>] POSTS
 // POST | GET requests
 router.get("/", authn, postCtrl.findAll);
@@ -20,10 +29,10 @@ router.get("/:id", authn, postCtrl.findOne);
 router.get("/user/:id", authn, postCtrl.findByUser);
 
 // POST | POST request => create post
-router.post("/", authn, postCtrl.createOne);
+router.post("/", authn, multer, postCtrl.createOne);
 
 // POST | PUT request => update post
-router.put("/:id", authn, postCtrl.updateOne);
+router.put("/:id", authn, multer, postCtrl.updateOne);
 
 // POST | DELETE request => delete post
 router.delete("/:id", authn, postCtrl.deleteOne);

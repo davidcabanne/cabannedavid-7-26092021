@@ -15,9 +15,6 @@ const path = require("path");
 // Full doc => https://helmetjs.github.io/
 const helmet = require("helmet");
 
-// const cookieSession = require("cookie-session");
-// const session = require("express-session");
-
 // [=>] Create & Execute express App
 // -
 const app = express();
@@ -39,8 +36,6 @@ app.use((req, res, next) => {
   next();
 });
 
-// // Cookies options
-
 // for parsing body application/json
 app.use(express.json());
 
@@ -50,39 +45,30 @@ app.use(cookieParser());
 // Helmet middleware
 app.use(helmet());
 
-// // routing manager for 'images' folder
-// // middleware allows to download files in static folder
-// app.use("/images", express.static(path.join(__dirname, "images")));
-
-// jwt
-// app.get("*", checkUser);
-// app.get("/jwtid", requireAuth, (req, res) => {
-//   res.status(200).send(res.locals.user._id);
-// });
+// routing manager for 'images' folder
+app.use("/images", express.static(path.join(__dirname, "images")));
 
 // for this route => use *dirname*Routes
 app.use("/users", userRoutes);
 app.use("/posts", postRoutes);
 
-app.use((req, res, next) => {
-  console.log("Requête reçue !");
-  next();
-});
-
-app.use((req, res, next) => {
-  res.status(201);
-  next();
-});
-
-app.use((req, res, next) => {
-  res.json({ message: "Votre requête a bien été reçue !" });
-  next();
-});
-
-app.use((req, res, next) => {
-  console.log("Réponse envoyée avec succès !");
-});
-
 // [=>] EXPORT App
 // -
 module.exports = app;
+
+// [=>] TEST Func.
+// app.use((req, res, next) => {
+//   console.log("Requête reçue !");
+//   next();
+// });
+// app.use((req, res, next) => {
+//   res.status(201);
+//   next();
+// });
+// app.use((req, res, next) => {
+//   res.json({ message: "Votre requête a bien été reçue !" });
+//   next();
+// });
+// app.use((req, res, next) => {
+//   console.log("Réponse envoyée avec succès !");
+// });
