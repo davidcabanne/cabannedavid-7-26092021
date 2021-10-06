@@ -7,24 +7,35 @@ const express = require("express");
 const router = express.Router();
 
 const postCtrl = require("../controllers/postCtrl");
+const commentCtrl = require("../controllers/commentCtrl");
 
 const authn = require("../middleware/authn");
 
 // [=>] Middlewares
-// -
-// GET requests
+// [=>] POSTS
+// POST | GET requests
 router.get("/", authn, postCtrl.findAll);
 router.get("/:id", authn, postCtrl.findOne);
 router.get("/user/:id", authn, postCtrl.findByUser);
 
-// // POST request => create post
+// POST | POST request => create post
 router.post("/", authn, postCtrl.createOne);
 
-// // PUT request => update post
+// POST | PUT request => update post
 router.put("/:id", authn, postCtrl.updateOne);
 
-// // DELETE request => delete post
+// POST | DELETE request => delete post
 router.delete("/:id", authn, postCtrl.deleteOne);
+
+// [=>] COMMENTS
+// COMMENT | POST request => create post
+router.post("/:id/comments/:commentId", authn, commentCtrl.createOne);
+
+// COMMENT | PUT request => update post
+router.put("/:id/comments/:commentId", authn, commentCtrl.updateOne);
+
+// COMMENT | DELETE request => delete post
+router.delete("/:id/comments/:commentId", authn, commentCtrl.deleteOne);
 
 // [=>] EXPORT Router
 // -

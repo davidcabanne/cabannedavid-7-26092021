@@ -86,22 +86,3 @@ app.use((req, res, next) => {
 // [=>] EXPORT App
 // -
 module.exports = app;
-
-// [=>] LEFTOVERS
-// -
-// // Cookies options
-// const expiryDate = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
-// app.use(
-//   session({
-//     name: "session",
-//     secret: process.env.SECURE_SESS,
-//     cookie: {
-//       secure: true,
-//       httpOnly: true,
-//       domain: "http://localhost:3000",
-//       expires: expiryDate,
-//     },
-//     resave: true,
-//     saveUninitialized: true,
-//   })
-// );

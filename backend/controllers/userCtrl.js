@@ -48,9 +48,6 @@ exports.signup = async function (req, res, next) {
       username: req.body.username,
       email: req.body.email,
       password: hash,
-      // picture: req.body.picture,
-      // bio: req.body.bio,
-      // isAdmin: req.body.isAdmin,
     });
     res.status(201).json(user);
   } catch (error) {

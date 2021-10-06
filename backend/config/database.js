@@ -27,13 +27,6 @@ const User = sequelize.define("User", {
   password: {
     type: DataTypes.STRING,
     allowNull: false,
-    validate: {
-      // At least one upper case English letter => (?=.*?[A-Z])
-      // At least one lower case English letter => (?=.*?[a-z])
-      // At least one digit => (?=.*?[0-9])
-      // At least one special character => (?=.*?[#?!@$%^&*-])
-      // is: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-])+$/i,
-    },
   },
   picture: {
     type: DataTypes.STRING,
