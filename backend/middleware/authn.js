@@ -7,7 +7,7 @@ const { User } = require("../config/database");
 // [=>] EXPORT middleware
 module.exports = async function (req, res, next) {
   try {
-    token = req.cookies.token;
+    token = req.headers.authorization.split(" ")[1];
 
     // verify token
     const decodedToken = jwt.verify(token, process.env.SECRET_TOKEN);

@@ -2,6 +2,7 @@
 // -
 const express = require("express");
 const cookieParser = require("cookie-parser");
+var cors = require("cors");
 
 const userRoutes = require("./routes/userRoutes");
 const postRoutes = require("./routes/postRoutes");
@@ -19,15 +20,19 @@ const helmet = require("helmet");
 // -
 const app = express();
 
+// app.use(cors());
+
 // [=>] Middlewares
 // -
 // or : http://expressjs.com/en/resources/middleware/cors.html
 // CORS midWare general | default options // allows app to access to API
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
+  // res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:8080");
+  res.setHeader("Access-Control-Allow-Credentials", true);
   res.setHeader(
     "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization"
+    "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization, Cookie"
   );
   res.setHeader(
     "Access-Control-Allow-Methods",

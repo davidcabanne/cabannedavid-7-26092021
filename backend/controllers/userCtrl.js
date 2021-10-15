@@ -48,6 +48,8 @@ exports.signup = async function (req, res, next) {
       username: req.body.username,
       email: req.body.email,
       password: hash,
+      picture: "",
+      bio: "",
     });
     res.status(201).json(user);
   } catch (error) {
@@ -82,12 +84,9 @@ exports.login = async function (req, res, next) {
       expiresIn: maxAgeToken,
     });
 
-    res.cookie("token", token, {
-      httpOnly: true,
-      expires: new Date(Date.now() + maxAgeToken * 1000),
-    });
+    const userId = user.id;
 
-    res.status(200).json(user);
+    res.status(200).json({ token, userId });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -96,7 +95,7 @@ exports.login = async function (req, res, next) {
 exports.logout = (req, res, next) => {
   console.log("=> logout Function");
 
-  res.clearCookie("token");
+  // res.clearCookie("token");
   res.end();
 };
 

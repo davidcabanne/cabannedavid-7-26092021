@@ -17,7 +17,11 @@ exports.findAll = async function (req, res, next) {
 
     const posts = await Post.findAll({
       order: [["createdAt", "DESC"]],
-      include: [{ model: User }, { model: Comment }, { model: Like }],
+      include: [
+        { model: User },
+        { model: Comment, include: [{ model: User }] },
+        { model: Like },
+      ],
     });
     res.status(200).json(posts);
   } catch (error) {
