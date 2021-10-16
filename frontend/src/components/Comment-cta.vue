@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="comment__container">
-      <div class="icon__tplt comment__icon"></div>
+      <div class="icon__tplt comment__icon" @click="createComment()"></div>
     </div>
   </div>
 </template>
@@ -10,6 +10,13 @@
 export default {
   name: "Comment-cta",
   props: ["Comment-cta"],
+  methods: {
+    createComment() {
+      this.$emit("createComment", {
+        message: "new comment created!",
+      });
+    },
+  },
 };
 </script>
 

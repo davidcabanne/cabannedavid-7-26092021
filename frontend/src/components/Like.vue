@@ -27,17 +27,7 @@ export default {
     toggleActiveClass: function(index) {
       this.buttons[index].active = !this.buttons[index].active;
     },
-    // loadAnimation: function() {
-    //   window.addEventListener("load", function(event) {
-    //     console.log(event);
-    //   });
-    //   const element = document.getElementById("likeAnimation");
-    //   element.classList.remove("preload");
-    // },
   },
-  // mounted() {
-  //   this.loadAnimation();
-  // },
 };
 </script>
 

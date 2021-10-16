@@ -4,6 +4,9 @@
   <!-- home page -->
   <div class="homepage__container">
     <div class="homepage__wrapper">
+      <!-- create post -->
+      <Post-create @reloadOnClick="refreshPosts" />
+      <!-- create post -->
       <!-- post tplt -->
       <div>
         <div v-if="posts && posts.length">
@@ -46,11 +49,13 @@
                 <div class="post__content--Edit">Editer</div>
 
                 <!-- comment tplt -->
+
                 <Comment
                   v-for="comment of post.Comments"
                   v-bind:key="comment.id"
                   v-bind:comment="comment"
                 />
+
                 <!-- comment tplt -->
               </div>
             </div>
@@ -66,8 +71,8 @@
       <!-- post tplt -->
     </div>
   </div>
-  <div class="responsiveSpacer"></div>
   <!-- home page -->
+  <div class="responsiveSpacer"></div>
 </template>
 
 <script>
@@ -75,6 +80,7 @@ import axios from "axios";
 import Nav from "@/components/Nav";
 import Comment from "@/components/Comment";
 import Like from "@/components/Like";
+import PostCreate from "@/components/Post-create";
 import CommentCta from "@/components/Comment-cta";
 import * as moment from "moment";
 
@@ -91,6 +97,7 @@ export default {
     Comment,
     Like,
     CommentCta,
+    PostCreate,
   },
   methods: {
     dateFormatter: function(date) {
@@ -100,29 +107,28 @@ export default {
 
       return formatDate;
     },
+    loadPosts: async function() {
+      const API_SERVER = "http://localhost:3000";
+
+      try {
+        const response = await axios.get(API_SERVER + `/posts`, {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        });
+
+        this.posts = response.data;
+      } catch (error) {
+        this.errors.push(error);
+      }
+    },
+    refreshPosts(payload) {
+      console.log(payload);
+      this.loadPosts();
+    },
   },
-
-  async created() {
-    const API_SERVER = "http://localhost:3000";
-
-    try {
-      const response = await axios.get(API_SERVER + `/posts`, {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
-      });
-
-      // const getUser = localStorage.getItem("username", response.data.username);
-      // console.log(getUser);
-
-      // const splittedUser = getUser.split(" ");
-      // const firstName = splittedUser[0];
-
-      // this.loggedUser = firstName;
-      this.posts = response.data;
-    } catch (error) {
-      this.errors.push(error);
-    }
+  mounted() {
+    this.loadPosts();
   },
 };
 </script>
