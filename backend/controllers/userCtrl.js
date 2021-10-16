@@ -86,7 +86,9 @@ exports.login = async function (req, res, next) {
 
     const userId = user.id;
 
-    res.status(200).json({ token, userId });
+    const username = user.username;
+
+    res.status(200).json({ token, userId, username });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

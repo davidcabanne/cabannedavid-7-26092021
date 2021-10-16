@@ -7,7 +7,11 @@
       <!-- post tplt -->
       <div>
         <div v-if="posts && posts.length">
-          <div v-for="post of posts" :key="post.id" class="post__container">
+          <div
+            v-for="post of posts"
+            :key="post.id"
+            class="post__container profile__contentContainer--animation"
+          >
             <div class="post__content--Container">
               <div class="post__content--Wrapper">
                 <div class="post__content--header">
@@ -79,6 +83,7 @@ export default {
     return {
       posts: [],
       errors: [],
+      loggedUser: "",
     };
   },
   components: {
@@ -106,6 +111,14 @@ export default {
           Authorization: "Bearer " + localStorage.getItem("token"),
         },
       });
+
+      // const getUser = localStorage.getItem("username", response.data.username);
+      // console.log(getUser);
+
+      // const splittedUser = getUser.split(" ");
+      // const firstName = splittedUser[0];
+
+      // this.loggedUser = firstName;
       this.posts = response.data;
     } catch (error) {
       this.errors.push(error);
@@ -119,25 +132,28 @@ export default {
   position: fixed;
   width: 100%;
   height: 100%;
-  background: var(--white);
+  background: var(--greenLight);
   z-index: 9999;
-  animation: slidesIn 0.4s forwards ease-out;
+  animation: slidesIn 1s forwards ease-in-out;
 }
 @keyframes slidesIn {
   0% {
     visibility: visible;
-    background: var(--white);
+    background: var(--greenLight);
     overflow-x: hidden;
     overflow-y: hidden;
     z-index: 9999999;
     opacity: 1;
   }
-  75% {
+  50% {
     opacity: 1;
   }
+
   99% {
+    opacity: 0;
     overflow-x: hidden;
     overflow-y: hidden;
+    background: var(--greenLight);
   }
   100% {
     z-index: -1;
@@ -145,6 +161,7 @@ export default {
     visibility: hidden;
     overflow-x: hidden;
     overflow-y: visible;
+    background: var(--greenLight);
   }
 }
 
@@ -168,6 +185,30 @@ export default {
 }
 .post__container:first-child {
   margin-top: 0px;
+}
+
+.profile__contentContainer--animation {
+  opacity: 0;
+  animation: blendIn 1s forwards cubic-bezier(0.77, 0, 0.18, 1);
+  animation-delay: 0.5s;
+  @for $i from 1 through 10 {
+    &:nth-child(#{$i}) {
+      animation-delay: $i * 0.1s;
+    }
+  }
+}
+@keyframes blendIn {
+  0% {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  0% {
+    transform: translateY(20px);
+  }
+  100% {
+    transform: translateY(0px);
+    opacity: 1;
+  }
 }
 
 .post__content--Container {

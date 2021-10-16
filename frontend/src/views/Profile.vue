@@ -34,11 +34,22 @@
     <!-- content -->
     <div class="profilepage__container">
       <div class="profilepage__wrapper">
-        <div class="profile__contentContainer">
+        <div
+          class="profile__contentContainer profile__contentContainer--animation"
+        >
           <div class="profile__descriptionContainer">
             {{ bio }}
           </div>
-
+          <div class="userpost__container">
+            <div class="userpost__wrapper">
+              <span class="userpost__title"
+                ><span class="userpost__title--accent"
+                  >{{ splitUsername(username) }}'s</span
+                >
+                latest activity:</span
+              >
+            </div>
+          </div>
           <Userpost />
         </div>
       </div>
@@ -91,6 +102,13 @@ export default {
         .catch((error) => {
           console.error(error);
         });
+    },
+    splitUsername(username) {
+      console.log("here");
+      const splittedUser = username.split(" ");
+      const firstName = splittedUser[0];
+      console.log(firstName);
+      return firstName;
     },
   },
   mounted() {
@@ -154,16 +172,16 @@ export default {
   border-bottom-right-radius: var(--spaceMed);
   box-shadow: 5px 5px 16px 5px rgba(0, 0, 0, 0.3),
     -8px -8px 12px 0 rgba(255, 255, 255, 0.5);
-  transform: translateY(-300px);
+  margin-top: -300px;
   animation: slidesOut 0.7s forwards cubic-bezier(0.77, 0, 0.18, 1);
 }
 
 @keyframes slidesOut {
   0% {
-    transform: translateY(-300px);
+    margin-top: -300px;
   }
   100% {
-    transform: translateY(0px);
+    margin-top: 0px;
   }
 }
 
@@ -191,15 +209,17 @@ export default {
   position: absolute;
   top: 0;
   left: 0;
-  height: 80px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 .profilepage__nav--icon {
   color: var(--white);
+  margin-top: var(--spaceMed);
   margin-left: var(--spaceMed);
 }
+
 svg {
   height: var(--spaceMed);
   width: auto;
@@ -207,6 +227,7 @@ svg {
   cursor: pointer;
   transition: opacity 0.2s ease-in-out;
 }
+
 svg:hover {
   opacity: 0.5;
 }
@@ -216,21 +237,23 @@ svg:hover {
   height: 150px;
   margin-bottom: var(--spaceSml);
 }
+
 .profile__picture {
   width: 150px;
   height: 100%;
   object-fit: cover;
   border-radius: 100%;
-  box-shadow: 5px 5px 16px 0 rgba(0, 0, 0, 0.15),
-    -8px -8px 12px 0 rgba(255, 255, 255, 0.1);
+  box-shadow: 5px 5px 16px 0 rgba(0, 0, 0, 0.4),
+    -8px -8px 12px 0 rgba(255, 255, 255, 0.2);
 }
 
 .profile__username {
   font-size: var(--headingThird);
   color: var(--white);
-  font-weight: 800;
+  font-weight: 900;
   margin-bottom: var(--spaceSml);
 }
+
 .profile__infos {
   font-size: var(--body-firstFont);
   font-weight: 500;
@@ -245,25 +268,31 @@ svg:hover {
   align-items: center;
   background: var(--white);
 }
+
 .profilepage__wrapper {
-  padding: var(--spaceMed) 0px var(--spaceMed) 0px;
-  width: 80vw;
+  width: 90vw;
 }
+
 .profile__contentContainer {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: var(--spaceMed);
+}
+
+.profile__contentContainer--animation {
   opacity: 0;
   animation: blendIn 0.7s forwards cubic-bezier(0.77, 0, 0.18, 1);
-  animation-delay: 0.5s;
+  animation-delay: 0.65s;
 }
+
 @keyframes blendIn {
   0% {
+    transform: translateY(20px);
     opacity: 0;
   }
   100% {
+    transform: translateY(0px);
     opacity: 1;
   }
 }
@@ -272,6 +301,9 @@ svg:hover {
   font-size: var(--body-secondFont);
   font-weight: 600;
   color: var(--greenPrimary);
+  margin-top: var(--spaceLrg);
+  margin-bottom: var(--spaceLrg);
+  width: 100%;
 }
 
 .profile__activityContainer {
@@ -287,5 +319,33 @@ svg:hover {
 
 .post__container {
   color: var(--darkgrey);
+}
+
+.userpost__container {
+  width: 90vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.userpost__wrapper {
+  width: 90vw;
+}
+.userpost__title {
+  font-size: var(--headingFirst);
+  font-weight: 900;
+  color: var(--darkgrey);
+}
+.userpost__title--accent {
+  color: var(--greenLight);
+}
+
+@media (max-width: 541px) {
+  .userpost__container {
+    width: 100vw;
+  }
+
+  .userpost__wrapper {
+    width: 90vw;
+  }
 }
 </style>

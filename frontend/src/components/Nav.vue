@@ -10,6 +10,7 @@
           <ul class="nav__iconlist nav__iconlist--mobile">
             <li>
               <router-link
+                @click="scrollToTop()"
                 to="/home"
                 class="icon__home icon__transition icon__mobile"
               ></router-link>
@@ -70,6 +71,13 @@ export default {
       const removeToken = await localStorage.setItem("token", "");
 
       return removeUser, removeToken;
+    },
+    scrollToTop() {
+      window.scroll({
+        top: 0,
+        left: 0,
+        behavior: "smooth",
+      });
     },
   },
 };
