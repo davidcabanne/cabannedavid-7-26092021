@@ -1,23 +1,142 @@
 <template>
   <div class="homepage__onLoad"></div>
+
+  <!-- nav -->
+  <div class="profilepage__nav">
+    <div class="profilepage__nav--icon">
+      <router-link to="/home" class=""
+        ><svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="8.4667mm"
+          height="8.4667mm"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M15,20.67a.7467.7467,0,0,1-.53-.22L7.95,13.93a2.7349,2.7349,0,0,1,0-3.86l6.52-6.52A.75.75,0,1,1,15.53,4.61L9.01,11.13a1.2354,1.2354,0,0,0,0,1.7393L15.53,19.39A.75.75,0,0,1,15,20.67Z"
+          />
+        </svg>
+      </router-link>
+    </div>
+    <div @click="toggleMenu" class="profilepage__nav--settings">
+      <svg
+        class="settings__icon"
+        xmlns="http://www.w3.org/2000/svg"
+        width="8.4667mm"
+        height="8.4667mm"
+        viewBox="0 0 24 24"
+      >
+        <path
+          class="cls-1"
+          d="M12,15.75A3.75,3.75,0,1,1,15.75,12,3.7545,3.7545,0,0,1,12,15.75Zm0-6A2.25,2.25,0,1,0,14.25,12,2.2525,2.2525,0,0,0,12,9.75Z"
+        />
+        <path
+          class="cls-1"
+          d="M15.2129,22.19a2.4454,2.4454,0,0,1-2.0977-1.1963l-.1143-.1982c-.2925-.51-.6533-.8018-.9907-.8027h-.0015c-.3394,0-.7041.293-1,.8037l-.11.1895a2.4225,2.4225,0,0,1-3.312.8691l-1.7192-.9834a2.65,2.65,0,0,1-.9771-3.6162,1.3327,1.3327,0,0,0,.2-1.2646A1.3277,1.3277,0,0,0,3.9,15.53a2.6529,2.6529,0,0,1-2.65-2.65V11.12A2.6532,2.6532,0,0,1,3.9,8.47a1.3277,1.3277,0,0,0,1.19-.4609A1.3307,1.3307,0,0,0,4.8911,6.746a2.6486,2.6486,0,0,1,.9771-3.6172l1.7295-.99a2.3608,2.3608,0,0,1,1.8257-.2461,2.4328,2.4328,0,0,1,1.4712,1.1133l.1147.1982c.2925.51.6528.8022.9907.8027h.0015c.3394,0,.7041-.2925,1-.8032l.1074-.188a2.4216,2.4216,0,0,1,3.3145-.8706l1.7188.9839a2.6485,2.6485,0,0,1,.9766,3.6162A1.33,1.33,0,0,0,18.92,8.0091a1.3266,1.3266,0,0,0,1.19.4609A2.6528,2.6528,0,0,1,22.76,11.12v1.76A2.6525,2.6525,0,0,1,20.11,15.53a1.3266,1.3266,0,0,0-1.19.4609,1.3321,1.3321,0,0,0,.1982,1.2637,2.6468,2.6468,0,0,1-.9766,3.6172l-1.7285.9893A2.3339,2.3339,0,0,1,15.2129,22.19Zm-3.2041-3.6973h.0049a2.734,2.734,0,0,1,2.2871,1.5547l.1084.1875a.9178.9178,0,0,0,1.248.3311l1.7393-.9961a1.1466,1.1466,0,0,0,.4219-1.5664,2.74,2.74,0,0,1-.1982-2.7617A2.7376,2.7376,0,0,1,20.11,14.03,1.1508,1.1508,0,0,0,21.26,12.88V11.12A1.1508,1.1508,0,0,0,20.11,9.97a2.7379,2.7379,0,0,1-2.49-1.2124,2.7375,2.7375,0,0,1,.2012-2.7637,1.1488,1.1488,0,0,0-.4238-1.5625l-1.73-.9907a.9217.9217,0,0,0-1.2627.333l-.1035.18a2.7508,2.7508,0,0,1-2.2993,1.5532h-.0054A2.7354,2.7354,0,0,1,9.709,3.953l-.1084-.1875a.9331.9331,0,0,0-.564-.4233.8686.8686,0,0,0-.6826.0923L6.6128,4.431a1.1489,1.1489,0,0,0-.4233,1.5635A2.7408,2.7408,0,0,1,6.39,8.7582,2.7392,2.7392,0,0,1,3.9,9.97a1.1509,1.1509,0,0,0-1.15,1.15v1.76A1.1509,1.1509,0,0,0,3.9,14.03a2.7382,2.7382,0,0,1,2.49,1.2119,2.7417,2.7417,0,0,1-.2012,2.7646,1.1491,1.1491,0,0,0,.4238,1.5625l1.73.99a.92.92,0,0,0,1.2627-.333l.1055-.1816A2.7491,2.7491,0,0,1,12.0088,18.4925Z"
+        />
+      </svg>
+    </div>
+  </div>
   <div class="profilepage__bodyWrapper">
-    <!--<Nav />-->
-    <div class="profilepage__header">
-      <div class="profilepage__nav">
-        <div class="profilepage__nav--icon">
-          <router-link to="/home" class=""
-            ><svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="8.4667mm"
-              height="8.4667mm"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M15,20.67a.7467.7467,0,0,1-.53-.22L7.95,13.93a2.7349,2.7349,0,0,1,0-3.86l6.52-6.52A.75.75,0,1,1,15.53,4.61L9.01,11.13a1.2354,1.2354,0,0,0,0,1.7393L15.53,19.39A.75.75,0,0,1,15,20.67Z"
-              /></svg
-          ></router-link>
+    <!-- nav -->
+
+    <!-- popup -->
+
+    <!-- popup -->
+
+    <!-- setting menu -->
+    <div class="setting__menuContainer">
+      <div class="setting__menuWrapper">
+        <!-- profile picture container -->
+        <div
+          class="profile__pictureContainer profile__pictureContainer--setting"
+        >
+          <img
+            class="profile__pictureSetting"
+            src="../../images/blank-profile-picture.png"
+            v-if="picture === null"
+          />
+          <img :src="picture" alt="" class="profile__pictureSetting" v-else />
+        </div>
+        <!-- profile picture container -->
+
+        <div class="setting__menuHeader">
+          <div class="card__title">
+            Hey {{ splitUsername(username) }}, <br />
+            update your profile!
+          </div>
+        </div>
+
+        <div class="setting__menuBody">
+          <!-- username -->
+          <div class="form-row">
+            <input
+              v-model="newUsername"
+              class="form-row__input"
+              type="text"
+              placeholder="Username"
+            />
+          </div>
+
+          <!-- bio -->
+          <div class="form-row">
+            <input
+              v-model="newBio"
+              class="form-row__input"
+              type="text"
+              placeholder="Bio"
+            />
+          </div>
+
+          <!-- profile picture -->
+          <div class="form-row">
+            <input
+              v-model="newPicture"
+              class="form-row__input"
+              type="text"
+              placeholder="Profile picture url"
+            />
+          </div>
+
+          <!-- email -->
+          <div class="form-row">
+            <input
+              v-model="newEmail"
+              class="form-row__input"
+              type="text"
+              placeholder="Adresse mail"
+            />
+          </div>
+
+          <!-- cta container -->
+          <div class="cta__container">
+            <!-- update Btn -->
+            <div class="form-row__btn">
+              <button
+                @click="updateUser()"
+                class="button btn__updateUser"
+                :class="{ 'button--disabled': !checkInputs }"
+              >
+                <span>Update</span>
+              </button>
+            </div>
+            <!-- delete Btn -->
+            <div class="form-row__btn">
+              <button
+                @click="deleteUser()"
+                class="button btn__deleteUser"
+                :class="{ 'button--disabled': !checkInputs }"
+              >
+                <span>Delete profile</span>
+              </button>
+            </div>
+          </div>
+          <!-- cta container -->
         </div>
       </div>
+    </div>
+    <!-- setting menu -->
+
+    <div class="profilepage__header">
       <div class="profile__pictureContainer">
         <img
           class="profile__picture"
@@ -28,7 +147,7 @@
       </div>
       <div class="profile__username">{{ username }}</div>
       <div class="profile__infos">{{ email }}</div>
-      <div class="profile__infos">Registered rank: {{ userId }}</div>
+      <div class="profile__infos">User id: {{ userId }}</div>
       <div class="profilepage__header--background"></div>
     </div>
     <!-- content -->
@@ -50,7 +169,11 @@
               >
             </div>
           </div>
-          <Userpost />
+          <Userpost
+            @onChange="childCallBack"
+            ref="childRef"
+            :data="moduleData"
+          />
         </div>
       </div>
     </div>
@@ -58,7 +181,7 @@
 </template>
 
 <script>
-// import axios from "axios";
+import axios from "axios";
 import Userpost from "@/components/Userpost";
 // import * as moment from "moment";
 
@@ -77,39 +200,175 @@ export default {
       createdAt: "",
     };
   },
-
+  computed: {
+    checkInputs: function() {
+      if (
+        this.pciture != "" &&
+        this.username != "" &&
+        this.email != "" &&
+        this.password != ""
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+  },
   methods: {
-    loadProfil() {
+    callChild() {
+      this.$refs.childRef.childMethod("Rerender Userposts");
+    },
+    loadProfil: async function() {
       const API_SERVER = "http://localhost:3000/users/";
 
-      fetch(API_SERVER + this.$route.params.id, {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
-      })
-        .then((response) => {
-          return response.json();
-        })
-        .then((data) => {
-          console.log(data);
-          this.userId = data.id;
-          this.username = data.username;
-          this.email = data.email;
-          this.picture = data.picture;
-          this.bio = data.bio;
-          this.createdAt = data.createdAt;
-        })
-        .catch((error) => {
-          console.error(error);
+      try {
+        const response = await axios.get(API_SERVER + this.$route.params.id, {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
         });
+
+        this.userId = response.data.id;
+        this.username = response.data.username;
+        this.email = response.data.email;
+        this.picture = response.data.picture;
+        this.bio = response.data.bio;
+        this.createdAt = response.data.createdAt;
+      } catch (error) {
+        this.errors.push(error);
+      }
+
+      // try {
+      //   console.log("[=>] UPDATE USER");
+
+      //   console.log(this.newUsername);
+      //   console.log(this.newEmail);
+      //   console.log(this.newPicture);
+      //   console.log(this.newBio);
+
+      //   let updateUserId = localStorage.getItem("userId");
+
+      //   const response = await axios.put(
+      //     API_SERVER + this.$route.params.id,
+      //     {
+      //       id: updateUserId,
+      //       username: this.newUsername,
+      //       email: this.newEmail,
+      //       picture: this.newPicture,
+      //       bio: this.newBio,
+      //     },
+      //     {
+      //       headers: {
+      //         Authorization: "Bearer " + localStorage.getItem("token"),
+      //       },
+      //     }
+      //   );
+      //   this.newUser = response.data;
+      //   console.log(this.newUser);
+
+      //   this.loadProfil();
+      //   // this.$router.push(`/profile/${this.$route.params.id}`);
+      // } catch (error) {
+      //   this.errors.push(error);
+      // }
     },
     splitUsername(username) {
-      console.log("here");
       const splittedUser = username.split(" ");
       const firstName = splittedUser[0];
-      console.log(firstName);
       return firstName;
     },
+    toggleMenu: function() {
+      const settingsIcon = document.querySelector(".settings__icon");
+      settingsIcon.classList.toggle("settings__icon--isActive");
+
+      const leftIcon = document.querySelector(".profilepage__nav--icon");
+      leftIcon.classList.toggle("profilepage__nav--icon--isActive");
+
+      const menuContainer = document.querySelector(".setting__menuContainer");
+      menuContainer.classList.toggle("setting__menuContainer--isActive");
+    },
+    updateUser: async function() {
+      console.log("[=>] UPDATE USER");
+
+      let updateUserId = localStorage.getItem("userId");
+
+      const API_SERVER = "http://localhost:3000/users/";
+
+      let checkEmail = this.newEmail;
+      let checkUsername = this.newUsername;
+
+      try {
+        if (checkEmail === undefined || checkEmail === null) {
+          checkEmail = this.email;
+        }
+        if (checkUsername === undefined || checkUsername === null) {
+          checkUsername = this.username;
+        }
+
+        const response = await axios.put(
+          API_SERVER + this.$route.params.id,
+          {
+            id: updateUserId,
+            username: checkUsername,
+            email: checkEmail,
+            picture: this.newPicture,
+            bio: this.newBio,
+          },
+          {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          }
+        );
+        this.newUser = response.data;
+        console.log(this.newUser);
+
+        this.loadProfil();
+        this.callChild();
+
+        // this.$router.push("/home");
+        // this.$router.push(`/profile/${this.$route.params.id}`);
+      } catch (error) {
+        this.errors.push(error);
+      }
+    },
+    deleteUser: async function() {
+      console.log("[=>] DELETE USER!");
+
+      let removeIsValid = confirm("Voulez vous vraiment supprimer ?");
+
+      const API_SERVER = "http://localhost:3000/users/";
+
+      if (removeIsValid) {
+        try {
+          const response = await axios.delete(
+            API_SERVER + this.$route.params.id,
+            {
+              headers: {
+                Authorization: "Bearer " + localStorage.getItem("token"),
+              },
+            }
+          );
+
+          console.log(response);
+
+          // clean local storage + delete user
+          localStorage.setItem("username", "");
+          localStorage.setItem("userId", "");
+          localStorage.setItem("token", "");
+
+          this.$router.push("/");
+        } catch (error) {
+          this.errors.push(error);
+        }
+      }
+
+      // return removeUsername, removeUserId, removeToken;
+    },
+    // refreshProfile(payload) {
+    //   console.log(payload);
+    //   this.loadProfil();
+    // },
   },
   mounted() {
     this.loadProfil();
@@ -203,33 +462,6 @@ export default {
   background: teal;
   opacity: 0.25;
   z-index: 1;
-}
-
-.profilepage__nav {
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.profilepage__nav--icon {
-  color: var(--white);
-  margin-top: var(--spaceMed);
-  margin-left: var(--spaceMed);
-}
-
-svg {
-  height: var(--spaceMed);
-  width: auto;
-  fill: var(--light);
-  cursor: pointer;
-  transition: opacity 0.2s ease-in-out;
-}
-
-svg:hover {
-  opacity: 0.5;
 }
 
 .profile__pictureContainer {
@@ -337,6 +569,186 @@ svg:hover {
 }
 .userpost__title--accent {
   color: var(--greenLight);
+}
+
+// nav & settings menu
+
+.setting__menuContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  min-height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--MedGrey);
+  transform: translateX(100vw);
+  transition: transform 0.5s cubic-bezier(0.86, 0, 0.07, 1);
+  z-index: 100;
+  transition-delay: 200ms;
+}
+
+.setting__menuContainer--isActive {
+  transform: translateX(0vw);
+  transition: transform 0.5s cubic-bezier(0.86, 0, 0.07, 1);
+  transition-delay: 200ms;
+}
+
+.setting__menuWrapper {
+  width: 80vw;
+  max-width: var(--maxWidth);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.setting__menuHeader {
+  margin-bottom: var(--spaceMed);
+}
+
+.profilepage__nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 200;
+}
+
+.profilepage__nav--icon {
+  color: var(--white);
+  margin-top: var(--spaceMed);
+  margin-left: var(--spaceMed);
+  transition: opacity 0.2s ease-in-out;
+}
+
+.profilepage__nav--icon--isActive {
+  opacity: 0;
+}
+
+.profilepage__nav--settings {
+  margin-top: var(--spaceMed);
+  margin-right: var(--spaceMed);
+  height: 30px;
+  width: 30px;
+  transition: all 0.5s ease-in-out;
+  transform-origin: center;
+}
+
+svg {
+  height: var(--spaceMed);
+  width: auto;
+  fill: var(--light);
+  cursor: pointer;
+}
+
+.profilepage__nav--icon:hover,
+.profilepage__nav--settings:hover {
+  opacity: 0.5;
+}
+
+.settings__icon {
+  transition: 0.5s cubic-bezier(0.99, -0.67, 0.32, 1.58);
+}
+
+.settings__icon--isActive {
+  transform: rotate(-180deg);
+}
+
+.form-row {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.form-row:last-child {
+  margin-bottom: 0px;
+}
+
+.form-row__input {
+  min-width: 100px;
+  width: 80vw;
+  max-width: var(--maxWidth);
+  font-weight: 500;
+  font-size: var(--body-firstFont);
+  color: black;
+  padding: var(--spaceSml);
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background: var(--lightGrey);
+}
+
+.form-row__input::placeholder {
+  color: var(--greenLight);
+  opacity: 0.5;
+}
+
+.form-row__input:focus {
+  border: 2px solid var(--greenLight);
+}
+
+.card__title {
+  color: var(--white);
+  font-size: var(--headingThird);
+  font-weight: 900;
+  margin-bottom: var(--spaceSml);
+  width: 80vw;
+}
+
+.profile__pictureContainer--setting {
+  margin-bottom: var(--spaceLrg);
+}
+.profile__pictureSetting {
+  width: 150px;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 25px;
+  opacity: 0.9;
+  box-shadow: 5px 5px 16px 0 rgba(0, 0, 0, 0.2),
+    -8px -8px 12px 0 rgba(255, 255, 255, 0.6);
+}
+
+.cta__container {
+  width: 80vw;
+  max-width: var(--maxWidth);
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-top: var(--spaceMed);
+}
+
+.button {
+  color: white;
+  border-radius: 8px;
+  font-weight: 800;
+  font-size: 15px;
+  border: none;
+  width: 150px;
+  min-width: 100px;
+  height: 50px;
+  padding: 16px;
+  transition: 0.3s background-color;
+  cursor: pointer;
+}
+
+.btn__updateUser {
+  background: var(--greenLight);
+}
+
+.btn__updateUser:hover {
+  background: var(--greenPrimary);
+}
+
+.btn__deleteUser {
+  background: var(--red);
+}
+
+.btn__deleteUser:hover {
+  opacity: 0.5;
 }
 
 @media (max-width: 541px) {

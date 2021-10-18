@@ -39,7 +39,12 @@
                 </div>
 
                 <div class="cta__container">
-                  <Like />
+                  <Like
+                    :postId="post.id"
+                    v-bind:key="post.id"
+                    v-bind:like="like"
+                    v-bind:id="post.id"
+                  />
                   <CommentCta />
                 </div>
 

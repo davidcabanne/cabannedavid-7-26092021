@@ -24,8 +24,8 @@
         {{ comment.content }}
       </div>
       <div class="comment__addComment">
+        <!-- v-model="sendComment" -->
         <input
-          v-model="sendComment"
           class=" form-row__input"
           placeholder="What's on your mind?"
         /><button @click="createComment()" class="button">+</button>

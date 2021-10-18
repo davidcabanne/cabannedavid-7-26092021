@@ -46,6 +46,7 @@
   --spaceSml: 15px;
   --spaceMed: 30px;
   --spaceLrg: 60px;
+  --maxWidth: 540px;
   /* icon size */
   --iconSize: 20px;
   /* post img */

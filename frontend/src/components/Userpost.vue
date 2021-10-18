@@ -33,6 +33,8 @@
                   <img :src="post.imageUrl" alt="" />
                 </div>
 
+                <button @click="callParent">Call Parent</button>
+
                 <!-- components -->
                 <!--<div class="cta__container">
                   <Like />
@@ -105,6 +107,10 @@ export default {
       } catch (error) {
         this.errors.push(error);
       }
+    },
+    childMethod(message) {
+      console.log(message);
+      this.loadPosts();
     },
   },
   mounted() {

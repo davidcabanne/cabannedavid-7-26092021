@@ -10,16 +10,19 @@ const routes = [
     path: "/",
     name: "Login",
     component: Login,
+    props: true,
   },
   {
     path: "/signup",
     name: "Signup",
     component: Signup,
+    props: true,
   },
   {
     path: "/home",
     name: "Home",
     component: Home,
+    props: true,
   },
   {
     path: "/profile/:id",

@@ -6,7 +6,7 @@
         class="icon__tplt like__icon"
         v-for="(btn, index) in buttons"
         type="button"
-        @click="toggleActiveClass(index)"
+        @click="toggleActiveClass(index, postId)"
         :class="{ active: btn.active }"
         :key="btn.id"
       ></div>
@@ -15,17 +15,44 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "Like",
-  props: ["like"],
+  props: ["like", "postData", "postId"],
   data: function() {
     return {
       buttons: [{ name: "Btn1", active: false }],
     };
   },
   methods: {
-    toggleActiveClass: function(index) {
+    toggleActiveClass: async function(index, postId) {
       this.buttons[index].active = !this.buttons[index].active;
+
+      const API_SERVER = "http://localhost:3000";
+
+      try {
+        const userId = localStorage.getItem("userId");
+
+        const response = await axios.post(
+          API_SERVER + `/posts/${postId}/like`,
+          {
+            PostId: postId,
+            UserId: userId,
+          },
+          {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          }
+        );
+
+        this.likes = response.data;
+        console.log("like?");
+        console.log(this.likes);
+      } catch (error) {
+        this.errors.push(error);
+      }
     },
   },
 };
