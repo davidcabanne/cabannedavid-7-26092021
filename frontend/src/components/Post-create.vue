@@ -4,7 +4,7 @@
       <textarea
         v-model="inputCreatePost"
         class=" form-row__input post__create--eraseTextInput"
-        :placeholder="`What's on your mind ` + [[loggedUser]] + `?`"
+        :placeholder="`What's on your mind ` + [[loggedFirstname]] + `?`"
         cols="30"
         rows="2"
         oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'
@@ -103,11 +103,14 @@ import axios from "axios";
 export default {
   name: "Post-create",
   data() {
+    const loggedUsername = localStorage.getItem("username");
+    const splittedUser = loggedUsername.split(" ");
+    const loggedFirstname = splittedUser[0];
+
     return {
       inputCreatePost: "",
       inputImageUrl: "",
-      userId: "",
-      loggedUser: "",
+      loggedFirstname: loggedFirstname,
     };
   },
   methods: {
@@ -116,18 +119,16 @@ export default {
       const API_SERVER = "http://localhost:3000";
 
       try {
-        this.loggedUser = await localStorage.getItem("userId");
-        this.postContent = await this.inputCreatePost;
-        this.postImage = await this.inputImageUrl;
-
-        console.log(this.loggedUser);
+        const loggedUserId = localStorage.getItem("userId");
+        const postContent = await this.inputCreatePost;
+        const postImage = await this.inputImageUrl;
 
         const response = await axios.post(
           API_SERVER + `/posts`,
           {
-            content: this.postContent,
-            imageUrl: this.postImage,
-            UserId: this.loggedUser,
+            content: postContent,
+            imageUrl: postImage,
+            UserId: loggedUserId,
           },
           {
             headers: {
@@ -135,11 +136,10 @@ export default {
             },
           }
         );
-
-        this.createdPost = response.data;
+        console.log(response);
 
         // emits eventListener to parent "Home"
-        this.$emit("reloadOnClick");
+        this.$emit("loadPosts");
 
         // remove input datas
         const eraseTextInput = document.querySelector(
@@ -153,19 +153,6 @@ export default {
         eraseImgInput.value = "";
       } catch (error) {
         this.errors.push(error);
-      }
-    },
-    getUser: async function() {
-      try {
-        const getUser = await localStorage.getItem("username");
-
-        const splittedUser = getUser.split(" ");
-        const firstName = splittedUser[0];
-
-        this.loggedUser = firstName;
-        console.log(this.loggedUser);
-      } catch (error) {
-        console.log(error);
       }
     },
     toggleImgInput: function() {

@@ -3,7 +3,10 @@
 
   <!-- nav -->
   <div class="profilepage__nav">
-    <div class="profilepage__nav--icon">
+    <div
+      class="profilepage__nav--icon"
+      :class="{ 'profilepage__nav--icon--isActive': toggleNavIcon }"
+    >
       <router-link to="/home" class=""
         ><svg
           xmlns="http://www.w3.org/2000/svg"
@@ -17,9 +20,18 @@
         </svg>
       </router-link>
     </div>
-    <div @click="toggleMenu" class="profilepage__nav--settings">
+    <div
+      v-if="showCustomProfile"
+      @click="toggleMenu"
+      class="profilepage__nav--settings"
+    >
       <svg
         class="settings__icon"
+        :class="{
+          'settings__icon--disabled': disableProfile,
+          'settings__icon--isActive': toggleSettingsIconAnimation,
+          'settings__icon--activeColor': toggleSettingsIconColor,
+        }"
         xmlns="http://www.w3.org/2000/svg"
         width="8.4667mm"
         height="8.4667mm"
@@ -39,24 +51,42 @@
   <div class="profilepage__bodyWrapper">
     <!-- nav -->
 
-    <!-- popup -->
-
-    <!-- popup -->
-
     <!-- setting menu -->
-    <div class="setting__menuContainer">
+    <div
+      class="setting__menuContainer"
+      :class="{ 'setting__menuContainer--isActive': toggleMenuContainer }"
+    >
       <div class="setting__menuWrapper">
+        <!-- popup -->
+        <div class="deleteUser__container">
+          <div class="deleteUser__card">
+            <div class="deleteUser__cardContent">
+              Are you sure you want to permanently delete your profile
+              <span class="deleteUser__username">{{
+                splitUsername(username)
+              }}</span>
+              ?
+            </div>
+            <div class="deleteUser__btnContainer">
+              <button @click="deleteUser()" class="button deleteUser__btn--yes">
+                Yes, I'm leaving
+              </button>
+              <button
+                @click="removeToggleConfirm()"
+                class="button deleteUser__btn--no"
+              >
+                No, I'll stay around here
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- popup -->
         <!-- profile picture container -->
-        <div
+        <!--<div
           class="profile__pictureContainer profile__pictureContainer--setting"
         >
-          <img
-            class="profile__pictureSetting"
-            src="../../images/blank-profile-picture.png"
-            v-if="picture === null"
-          />
-          <img :src="picture" alt="" class="profile__pictureSetting" v-else />
-        </div>
+          <img :src="picture" alt="" class="profile__pictureSetting" />
+        </div>-->
         <!-- profile picture container -->
 
         <div class="setting__menuHeader">
@@ -122,7 +152,7 @@
             <!-- delete Btn -->
             <div class="form-row__btn">
               <button
-                @click="deleteUser()"
+                @click="toggleConfirm()"
                 class="button btn__deleteUser"
                 :class="{ 'button--disabled': !checkInputs }"
               >
@@ -138,12 +168,13 @@
 
     <div class="profilepage__header">
       <div class="profile__pictureContainer">
-        <img
-          class="profile__picture"
-          src="../../images/blank-profile-picture.png"
+        <!-- <img
           v-if="picture === null"
+          :src="defaultPicture"
+          class="profile__picture"
         />
-        <img :src="picture" alt="" class="profile__picture" v-else />
+        <img v-else :src="picture" alt="" class="profile__picture" /> -->
+        <img :src="picture" alt="" class="profile__picture" />
       </div>
       <div class="profile__username">{{ username }}</div>
       <div class="profile__infos">{{ email }}</div>
@@ -169,10 +200,12 @@
               >
             </div>
           </div>
-          <Userpost
-            @onChange="childCallBack"
-            ref="childRef"
-            :data="moduleData"
+          <Post
+            v-for="post in posts"
+            :key="post.id"
+            :post="post"
+            class="post__container profile__contentContainer--animation"
+            v-on:loadPosts="loadPosts"
           />
         </div>
       </div>
@@ -182,13 +215,13 @@
 
 <script>
 import axios from "axios";
-import Userpost from "@/components/Userpost";
-// import * as moment from "moment";
+import Post from "@/components/Post";
+import * as moment from "moment";
 
 export default {
   name: "Profile",
   components: {
-    Userpost,
+    Post,
   },
   data() {
     return {
@@ -198,12 +231,19 @@ export default {
       picture: "",
       bio: "",
       createdAt: "",
+      defaultPicture: require("../../images/blankprofilepicture.png"),
+      disableProfile: false,
+      toggleSettingsIconAnimation: false,
+      toggleSettingsIconColor: false,
+      toggleNavIcon: false,
+      toggleMenuContainer: false,
+      posts: [],
     };
   },
   computed: {
     checkInputs: function() {
       if (
-        this.pciture != "" &&
+        this.picture != "" &&
         this.username != "" &&
         this.email != "" &&
         this.password != ""
@@ -215,10 +255,52 @@ export default {
     },
   },
   methods: {
+    dateFormatter: function(date) {
+      let formatDate = moment(date)
+        .startOf("hour")
+        .fromNow();
+
+      return formatDate;
+    },
+    async loadPosts() {
+      const API_SERVER = "http://localhost:3000";
+
+      try {
+        const response = await axios.get(
+          API_SERVER + `/posts/user/` + this.$route.params.id,
+          {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          }
+        );
+        this.posts = response.data;
+      } catch (error) {
+        this.errors.push(error);
+      }
+    },
+    showCustomProfile() {
+      const currentUser = localStorage.getItem("userId");
+      const profileUser = this.$route.params.id;
+
+      console.log(currentUser);
+      console.log(profileUser);
+
+      if (currentUser !== profileUser) {
+        console.log("[=>] wrong User!");
+
+        this.disableProfile = true;
+
+        return false;
+      }
+      console.log("[=>] Good User!");
+
+      return true;
+    },
     callChild() {
       this.$refs.childRef.childMethod("Rerender Userposts");
     },
-    loadProfil: async function() {
+    loadProfile: async function() {
       const API_SERVER = "http://localhost:3000/users/";
 
       try {
@@ -237,40 +319,6 @@ export default {
       } catch (error) {
         this.errors.push(error);
       }
-
-      // try {
-      //   console.log("[=>] UPDATE USER");
-
-      //   console.log(this.newUsername);
-      //   console.log(this.newEmail);
-      //   console.log(this.newPicture);
-      //   console.log(this.newBio);
-
-      //   let updateUserId = localStorage.getItem("userId");
-
-      //   const response = await axios.put(
-      //     API_SERVER + this.$route.params.id,
-      //     {
-      //       id: updateUserId,
-      //       username: this.newUsername,
-      //       email: this.newEmail,
-      //       picture: this.newPicture,
-      //       bio: this.newBio,
-      //     },
-      //     {
-      //       headers: {
-      //         Authorization: "Bearer " + localStorage.getItem("token"),
-      //       },
-      //     }
-      //   );
-      //   this.newUser = response.data;
-      //   console.log(this.newUser);
-
-      //   this.loadProfil();
-      //   // this.$router.push(`/profile/${this.$route.params.id}`);
-      // } catch (error) {
-      //   this.errors.push(error);
-      // }
     },
     splitUsername(username) {
       const splittedUser = username.split(" ");
@@ -278,14 +326,13 @@ export default {
       return firstName;
     },
     toggleMenu: function() {
-      const settingsIcon = document.querySelector(".settings__icon");
-      settingsIcon.classList.toggle("settings__icon--isActive");
+      this.toggleSettingsIconAnimation = !this.toggleSettingsIconAnimation;
 
-      const leftIcon = document.querySelector(".profilepage__nav--icon");
-      leftIcon.classList.toggle("profilepage__nav--icon--isActive");
+      this.toggleSettingsIconColor = !this.toggleSettingsIconColor;
 
-      const menuContainer = document.querySelector(".setting__menuContainer");
-      menuContainer.classList.toggle("setting__menuContainer--isActive");
+      this.toggleNavIcon = !this.toggleNavIcon;
+
+      this.toggleMenuContainer = !this.toggleMenuContainer;
     },
     updateUser: async function() {
       console.log("[=>] UPDATE USER");
@@ -323,55 +370,98 @@ export default {
         this.newUser = response.data;
         console.log(this.newUser);
 
-        this.loadProfil();
-        this.callChild();
+        this.toggleSettingsIconAnimation = false;
+        this.toggleSettingsIconColor = false;
+        this.toggleNavIcon = false;
+        this.toggleMenuContainer = false;
 
-        // this.$router.push("/home");
-        // this.$router.push(`/profile/${this.$route.params.id}`);
+        this.newUsername = "";
+        this.newBio = "";
+        this.newPicture = "";
+        this.newEmail = "";
+
+        this.loadProfile();
+        this.callChild();
       } catch (error) {
         this.errors.push(error);
       }
     },
+    toggleConfirm: function() {
+      console.log("[=>] TOGGLE CONFIRM !");
+
+      const navIcon = document.querySelector(".settings__icon");
+      navIcon.classList.add("settings__icon--disabled");
+
+      const deleteConfirm = document.querySelector(".deleteUser__container");
+      deleteConfirm.classList.add("deleteUser__container--isActive");
+    },
+    removeToggleConfirm: function() {
+      const deleteConfirm = document.querySelector(".deleteUser__container");
+      deleteConfirm.classList.remove("deleteUser__container--isActive");
+
+      const navIcon = document.querySelector(".settings__icon");
+      navIcon.classList.remove("settings__icon--disabled");
+    },
     deleteUser: async function() {
       console.log("[=>] DELETE USER!");
 
-      let removeIsValid = confirm("Voulez vous vraiment supprimer ?");
+      // remove deleteUser inputs section
+      const clearInputContainer = document.querySelector(
+        ".deleteUser__btnContainer"
+      );
+      clearInputContainer.remove();
+
+      // remove deleteUser card content
+      const clearCardContainer = document.querySelector(
+        ".deleteUser__cardContent"
+      );
+      clearCardContainer.innerHTML = "";
+
+      // create element, add styles, add message
+      const messageContainer = document.createElement("div");
+      clearCardContainer.appendChild(messageContainer);
+
+      const deleteUserCard = document.querySelector(".deleteUser__card");
+      messageContainer.classList.add("deleteUser__messageContent");
+      clearCardContainer.classList.toggle(
+        "deleteUser__messageContent--isActive"
+      );
+      deleteUserCard.classList.toggle("deleteUserCard--isActive");
+      messageContainer.innerHTML = `We're sad to see you go ${this.username}`;
 
       const API_SERVER = "http://localhost:3000/users/";
 
-      if (removeIsValid) {
-        try {
-          const response = await axios.delete(
-            API_SERVER + this.$route.params.id,
-            {
-              headers: {
-                Authorization: "Bearer " + localStorage.getItem("token"),
-              },
-            }
-          );
+      try {
+        const response = await axios.delete(
+          API_SERVER + this.$route.params.id,
+          {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          }
+        );
 
-          console.log(response);
+        console.log(response);
 
-          // clean local storage + delete user
-          localStorage.setItem("username", "");
-          localStorage.setItem("userId", "");
-          localStorage.setItem("token", "");
+        // remove user from local storage
+        localStorage.setItem("username", "");
+        localStorage.setItem("userId", "");
+        localStorage.setItem("token", "");
 
-          this.$router.push("/");
-        } catch (error) {
-          this.errors.push(error);
-        }
+        setTimeout(() => this.$router.push("/"), 3000);
+      } catch (error) {
+        this.errors.push(error);
       }
-
-      // return removeUsername, removeUserId, removeToken;
     },
-    // refreshProfile(payload) {
-    //   console.log(payload);
-    //   this.loadProfil();
-    // },
+    refreshPosts(payload) {
+      console.log(payload);
+      this.loadPosts();
+    },
   },
   mounted() {
-    this.loadProfil();
+    this.showCustomProfile();
+    this.loadProfile();
+    this.loadPosts();
   },
 };
 </script>
@@ -535,7 +625,7 @@ export default {
   color: var(--greenPrimary);
   margin-top: var(--spaceLrg);
   margin-bottom: var(--spaceLrg);
-  width: 100%;
+  width: 80vw;
 }
 
 .profile__activityContainer {
@@ -554,7 +644,7 @@ export default {
 }
 
 .userpost__container {
-  width: 90vw;
+  width: 80vw;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -572,17 +662,18 @@ export default {
 }
 
 // nav & settings menu
-
 .setting__menuContainer {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
-  min-height: 100%;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   background: var(--MedGrey);
+  padding-top: var(--spaceLrg);
+  padding-bottom: var(--spaceLrg);
   transform: translateX(100vw);
   transition: transform 0.5s cubic-bezier(0.86, 0, 0.07, 1);
   z-index: 100;
@@ -592,6 +683,7 @@ export default {
 .setting__menuContainer--isActive {
   transform: translateX(0vw);
   transition: transform 0.5s cubic-bezier(0.86, 0, 0.07, 1);
+  transition-property: transform;
   transition-delay: 200ms;
 }
 
@@ -657,6 +749,13 @@ svg {
 
 .settings__icon--isActive {
   transform: rotate(-180deg);
+}
+.settings__icon--activeColor {
+  fill: var(--greenLight);
+}
+
+.settings__icon--disabled {
+  display: none;
 }
 
 .form-row {
@@ -729,6 +828,8 @@ svg {
   border: none;
   width: 150px;
   min-width: 100px;
+  max-width: var(--maxWidth);
+
   height: 50px;
   padding: 16px;
   transition: 0.3s background-color;
@@ -751,7 +852,148 @@ svg {
   opacity: 0.5;
 }
 
+.deleteUser__container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: red;
+  z-index: -1;
+  opacity: 0;
+  animation: opacity_out 0.5s cubic-bezier(0.86, 0, 0.07, 1);
+  // transition: opacity 1s cubic-bezier(0.86, 0, 0.07, 1);
+}
+.deleteUser__container--isActive {
+  opacity: 1;
+  z-index: 999;
+  animation: opacity_in 0.5s cubic-bezier(0.86, 0, 0.07, 1);
+}
+
+@keyframes opacity_in {
+  0% {
+    z-index: -1;
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+    z-index: 999;
+  }
+}
+@keyframes opacity_out {
+  0% {
+    opacity: 1;
+    z-index: 999;
+  }
+  99% {
+    opacity: 0;
+  }
+  100% {
+    z-index: -1;
+    opacity: 0;
+  }
+}
+
+.deleteUser__card {
+  position: relative;
+  width: 100vw;
+  // max-width: 540px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: var(--darkgrey);
+}
+
+.deleteUser__cardContent {
+  width: 80vw;
+  max-width: 540px;
+  color: var(--light);
+  font-weight: 900;
+  font-size: var(--headingThird);
+}
+
+.deleteUser__messageContent {
+  width: 80vw;
+  max-width: 540px;
+  color: var(--light);
+  font-weight: 900;
+  font-size: var(--headingThird);
+}
+
+.deleteUserCard--isActive {
+  animation: background_goodbye 2.3s cubic-bezier(0.86, 0, 0.07, 1) forwards;
+}
+
+.deleteUser__messageContent--isActive {
+  animation: goodbye 2.3s cubic-bezier(0.86, 0, 0.07, 1) forwards;
+}
+
+@keyframes goodbye {
+  0% {
+    transform-origin: center;
+    opacity: 0;
+  }
+  20% {
+    transform: translate3d(0, 20px, 0) rotate3d(0, 0, 1, -10deg);
+    opacity: 0;
+  }
+  45% {
+    transform: translate3d(0, -20px, 0) rotate3d(0, 0, 1, 10deg);
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(0, 50vh, 0) rotate3d(0, 0, 0, 0deg);
+  }
+}
+@keyframes background_goodbye {
+  0% {
+    background: var(--darkgrey);
+  }
+  100% {
+    background: var(--greenLight);
+  }
+}
+
+.deleteUser__btnContainer {
+  width: 80vw;
+  max-width: 540px;
+  display: flex;
+  flex-direction: column;
+  margin-top: var(--spaceLrg);
+}
+
+.deleteUser__btn--yes {
+  margin-bottom: var(--spaceMed);
+}
+
+.deleteUser__btn--yes,
+.deleteUser__btn--no {
+  color: var(--red);
+  width: 80vw;
+  background: var(--light);
+}
+
+.deleteUser__btn--yes:hover {
+  color: var(--light);
+  background: var(--red);
+}
+
+.deleteUser__btn--no:hover {
+  color: var(--light);
+  background: var(--greenLight);
+}
+
 @media (max-width: 541px) {
+  .profile__descriptionContainer {
+    width: 90vw;
+  }
+
   .userpost__container {
     width: 100vw;
   }

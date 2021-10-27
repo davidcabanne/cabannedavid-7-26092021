@@ -29,7 +29,7 @@
             </li>
             <li>
               <router-link
-                :to="{ name: 'Profile', params: { id: getUserId() } }"
+                :to="{ name: 'Profile', params: { id: userId } }"
                 class="icon__profile icon__transition"
               ></router-link>
             </li>
@@ -60,17 +60,17 @@
 <script>
 export default {
   name: "Nav",
+  data() {
+    const userId = localStorage.getItem("userId");
+
+    return {
+      userId: userId,
+    };
+  },
   methods: {
-    getUserId: function() {
-      const userId = localStorage.getItem("userId");
-
-      return userId;
-    },
-    logoutUser: async function() {
-      const removeUser = await localStorage.setItem("userId", "");
-      const removeToken = await localStorage.setItem("token", "");
-
-      return removeUser, removeToken;
+    logoutUser: function() {
+      localStorage.removeItem("userId");
+      localStorage.removeItem("token");
     },
     scrollToTop() {
       window.scroll({

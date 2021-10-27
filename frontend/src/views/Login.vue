@@ -1,9 +1,18 @@
 <template>
-  <div class="homepage__onLoad">
-    <div class="homepage__onLoad--container">
-      <div class="homepage__onLoad--msg">
+  <div
+    class="homepage__onLoad"
+    :class="{ 'homepage__onLoad--active': loginAnimation }"
+  >
+    <div
+      class="homepage__onLoad--container"
+      :class="{ 'homepage__onLoad--container--active': loginAnimation }"
+    >
+      <div
+        class="homepage__onLoad--msg"
+        :class="{ 'homepage__onLoad--msg--active': loginAnimation }"
+      >
         Hello,<br />
-        {{ loggedUser }}!
+        {{ loggedUsername }}!
       </div>
     </div>
   </div>
@@ -63,7 +72,8 @@ export default {
     return {
       email: "",
       password: "",
-      loggedUser: "",
+      loggedUsername: "",
+      loginAnimation: false,
     };
   },
   computed: {
@@ -80,40 +90,23 @@ export default {
       console.log("loggin-in");
       const API_SERVER = "http://localhost:3000";
       try {
-        const login = await axios.post(API_SERVER + `/users/login`, {
+        const response = await axios.post(API_SERVER + `/users/login`, {
           email: this.email,
           password: this.password,
         });
-        console.log(login);
+        console.log(response);
 
-        localStorage.setItem("token", login.data.token);
-
-        localStorage.setItem("userId", login.data.userId);
-
-        localStorage.setItem("username", login.data.username);
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("userId", response.data.userId);
+        localStorage.setItem("username", response.data.username);
 
         const getUser = await localStorage.getItem("username");
-
         const splittedUser = getUser.split(" ");
-        const firstName = splittedUser[0];
+        this.loggedUsername = splittedUser[0];
 
-        this.loggedUser = firstName;
-
-        // animation classes
-        const loginSuccessOne = document.querySelector(".homepage__onLoad");
-        const loginSuccessTwo = document.querySelector(
-          ".homepage__onLoad--container"
-        );
-        const loginSuccessThree = document.querySelector(
-          ".homepage__onLoad--msg"
-        );
-
-        loginSuccessOne.classList.add("homepage__onLoad--active");
-        loginSuccessTwo.classList.add("homepage__onLoad--container--active");
-        loginSuccessThree.classList.add("homepage__onLoad--msg--active");
+        this.loginAnimation = true;
 
         setTimeout(() => this.$router.push({ path: "Home" }), 3000);
-        // this.$router.push({ name: "Home" });
       } catch (error) {
         this.errors.push(error);
       }

@@ -29,7 +29,7 @@ exports.likePost = async function (req, res, next) {
         UserId: req.user.id,
         PostId: req.params.id,
       });
-      res.status(201).json({ message: "like ajouté !" });
+      res.status(201).json(like);
     }
   } catch (error) {
     res.status(500).json({ message: error.message });

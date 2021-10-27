@@ -42,13 +42,16 @@ exports.findOne = async function (req, res, next) {
 exports.signup = async function (req, res, next) {
   console.log("=> Signup function");
 
+  let blankProfilePicture =
+    "https://www.handiclubnimois.fr/wp-content/uploads/2020/10/blank-profile-picture-973460_1280.png";
+
   try {
     const hash = await bcrypt.hash(req.body.password, 10);
     const user = await User.create({
       username: req.body.username,
       email: req.body.email,
       password: hash,
-      picture: "",
+      picture: blankProfilePicture,
       bio: "",
     });
     res.status(201).json(user);

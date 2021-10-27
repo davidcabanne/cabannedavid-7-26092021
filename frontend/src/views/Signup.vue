@@ -44,17 +44,17 @@
           required
         />
       </div>
-      <!-- <div class="form-row" v-if="!checkInputs">
+      <div class="form-row" v-if="!checkInputs">
         Tous les champs sont recquis !
-      </div> -->
+      </div>
       <div class="form-row">
-        <button
+        <input
           @click="signUp()"
           class="button"
           :class="{ 'button--disabled': !signUp }"
-        >
-          <span>Créer mon compte</span>
-        </button>
+          type="submit"
+          value="Créer mon compte"
+        />
       </div>
     </div>
   </div>
@@ -70,33 +70,31 @@ export default {
       username: "",
       email: "",
       password: "",
+      checkInputs: true,
     };
-  },
-  computed: {
-    checkInputs: function() {
-      if (this.username != "" && this.email != "" && this.password != "") {
-        return true;
-      } else {
-        return false;
-      }
-    },
   },
   methods: {
     signUp: async function() {
-      console.log("Signing-in !");
+      console.log("Signing-up !");
+
+      if (this.username === "" || this.email === "" || this.password === "") {
+        this.checkInputs = false;
+
+        return;
+      }
 
       const API_SERVER = "http://localhost:3000";
 
       try {
-        const signup = await axios.post(API_SERVER + `/users/signup`, {
+        const response = await axios.post(API_SERVER + `/users/signup`, {
           username: this.username,
           email: this.email,
           password: this.password,
         });
 
-        console.log(signup);
+        console.log(response);
         console.log(
-          `User: ${signup.data.username}, email: ${signup.data.email} is SIGNED-UP !`
+          `User: ${response.data.username}, email: ${response.data.email} is SIGNED-UP !`
         );
 
         this.$router.push({ name: "Login" });
