@@ -1,15 +1,9 @@
 <template>
   <div id="comment">
     <div class="comment__content--body">
-      <div class="comment__contentHeader ">
-        <div class="comment__content--Title comment__user--Bold">
-          Comments
-        </div>
-      </div>
-
       <div class="comment__content--header">
         <router-link
-          :to="{ name: 'Profile', params: { id: comment.User.id } }"
+          :to="{ name: 'Profile', params: { id: comment.UserId } }"
           class="comment__userContainer"
         >
           <img :src="comment.User.picture" class="comment__userPicture" />
@@ -23,26 +17,32 @@
       <div class="comment__textContent comment__user--Regular">
         {{ comment.content }}
       </div>
-      <div class="comment__addComment">
-        <!-- v-model="sendComment" -->
-        <input
-          class=" form-row__input"
-          placeholder="What's on your mind?"
-        /><button @click="createComment()" class="button">+</button>
-      </div>
+      <button @click="deleteComment" v-if="authUpdateComment">Delete</button>
     </div>
   </div>
 </template>
 
 <script>
+// => Plugins
+import axios from "axios";
 import * as moment from "moment";
-// import CommentCta from "@/components/Comment-cta";
 
 export default {
   name: "Comment",
   props: ["comment"],
-  components: {
-    // CommentCta,
+  components: {},
+  data() {
+    const loggedUserId = localStorage.getItem("userId");
+    const parsedUserId = parseInt(loggedUserId, 10);
+    const commentUserId = this.comment.UserId;
+
+    const admin = localStorage.getItem("admin");
+
+    const authUpdateComment = parsedUserId == commentUserId || admin === "true";
+
+    return {
+      authUpdateComment: authUpdateComment,
+    };
   },
   methods: {
     dateFormatter: function(date) {
@@ -52,11 +52,28 @@ export default {
 
       return formatDate;
     },
-    toggleCreateComment(payload) {
-      this.message = payload.message;
+    deleteComment: async function() {
+      console.log("[=>] DELETE COMMENT");
 
-      const newInput = document.querySelector(".comment__addComment");
-      newInput.classList.toggle("comment__addComment--active");
+      console.log(this.comment);
+
+      const API_SERVER = "http://localhost:3000/posts";
+
+      try {
+        const response = await axios.delete(
+          API_SERVER + `/${this.comment.PostId}/comments/${this.comment.id}`,
+          {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          }
+        );
+        console.log(response);
+
+        this.$emit("commentDeleted");
+      } catch (error) {
+        this.errors.push(error);
+      }
     },
   },
 };

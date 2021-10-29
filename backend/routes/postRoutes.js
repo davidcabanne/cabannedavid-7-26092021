@@ -38,13 +38,13 @@ router.put("/:id", authn, multer, postCtrl.updateOne);
 router.delete("/:id", authn, postCtrl.deleteOne);
 
 // [=>] COMMENTS
-// COMMENT | POST request => create post
-router.post("/:id/comments/:commentId", authn, commentCtrl.createOne);
+// COMMENT | POST request => create comment
+router.post("/:id/comments/", authn, commentCtrl.createOne);
 
-// COMMENT | PUT request => update post
+// COMMENT | PUT request => update comment
 router.put("/:id/comments/:commentId", authn, commentCtrl.updateOne);
 
-// COMMENT | DELETE request => delete post
+// COMMENT | DELETE request => delete comment
 router.delete("/:id/comments/:commentId", authn, commentCtrl.deleteOne);
 
 // [=>] LIKES

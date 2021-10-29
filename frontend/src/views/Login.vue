@@ -99,6 +99,7 @@ export default {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("userId", response.data.userId);
         localStorage.setItem("username", response.data.username);
+        localStorage.setItem("admin", response.data.admin);
 
         const getUser = await localStorage.getItem("username");
         const splittedUser = getUser.split(" ");
@@ -117,10 +118,11 @@ export default {
 
 <style scoped lang="scss">
 .homepage__onLoad {
-  position: absolute;
-  width: 100%;
-  height: 100%;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
   opacity: 0;
+  overflow: hidden;
   z-index: -1;
 }
 .homepage__onLoad--active {

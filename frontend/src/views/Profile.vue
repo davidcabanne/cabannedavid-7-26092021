@@ -205,7 +205,7 @@
             :key="post.id"
             :post="post"
             class="post__container profile__contentContainer--animation"
-            v-on:loadPosts="loadPosts"
+            v-on:postUpdated="loadPosts"
           />
         </div>
       </div>
@@ -444,9 +444,9 @@ export default {
         console.log(response);
 
         // remove user from local storage
-        localStorage.setItem("username", "");
-        localStorage.setItem("userId", "");
-        localStorage.setItem("token", "");
+        localStorage.removeItem("username");
+        localStorage.removeItem("userId");
+        localStorage.removeItem("token");
 
         setTimeout(() => this.$router.push("/"), 3000);
       } catch (error) {

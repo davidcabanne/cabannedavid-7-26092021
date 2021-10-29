@@ -9,7 +9,7 @@
         @reloadOnClick="refreshPosts"
         :loggedUsername="loggedUsername"
         :loggedFirstname="loggedFirstname"
-        v-on:loadPosts="loadPosts"
+        v-on:postUpdated="handlePostUpdated"
       />
       <!-- create post component -->
 
@@ -19,7 +19,7 @@
         :key="post.id"
         :post="post"
         class="post__container profile__contentContainer--animation"
-        v-on:loadPosts="loadPosts"
+        v-on:postUpdated="handlePostUpdated"
       />
       <!-- Post component -->
     </div>
@@ -36,8 +36,6 @@ import axios from "axios";
 import Nav from "@/components/Nav";
 import Post from "@/components/Post";
 import PostCreate from "@/components/Post-create";
-// import Comment from "@/components/Comment";
-// import CommentCta from "@/components/Comment-cta";
 
 export default {
   data() {
@@ -59,10 +57,13 @@ export default {
     Nav,
     Post,
     PostCreate,
-    // Comment,
-    // CommentCta,
   },
   methods: {
+    handlePostUpdated: async function() {
+      console.log("handle post updated");
+
+      await this.loadPosts();
+    },
     loadPosts: async function() {
       const API_SERVER = "http://localhost:3000";
 
@@ -79,8 +80,8 @@ export default {
       }
     },
   },
-  mounted() {
-    this.loadPosts();
+  async mounted() {
+    await this.loadPosts();
   },
 };
 </script>

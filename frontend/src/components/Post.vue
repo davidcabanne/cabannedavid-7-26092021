@@ -28,7 +28,7 @@
       <div class="cta__container">
         <!--<Like :postId="postId" />-->
 
-        <div id="like">
+        <div class="cta__public">
           <div class="like__container">
             <div
               id="likeAnimation"
@@ -38,6 +38,34 @@
               :class="{ active: likeActive }"
               :key="postId"
             ></div>
+          </div>
+          <div>
+            <svg
+              @click="toggleComment"
+              :class="{ 'icon__comment--active': commentActive }"
+              class="icon__tplt icon__comment"
+              xmlns="http://www.w3.org/2000/svg"
+              width="8.4667mm"
+              height="8.4667mm"
+              viewBox="0 0 24 24"
+            >
+              <path
+                class="cls-1"
+                d="M12,22.81a2.2668,2.2668,0,0,1-1.8-.96l-1.5-2a.4669.4669,0,0,0-.2046-.1H8c-4.1675,0-6.75-1.1289-6.75-6.75V8c0-4.416,2.334-6.75,6.75-6.75h8c4.416,0,6.75,2.334,6.75,6.75v5c0,4.416-2.334,6.75-6.75,6.75h-.5a.2627.2627,0,0,0-.2021.1025L13.8,21.85A2.2645,2.2645,0,0,1,12,22.81ZM8,2.75C4.4185,2.75,2.75,4.4183,2.75,8v5c0,4.5205,1.5479,5.25,5.25,5.25h.5a1.8647,1.8647,0,0,1,1.4067.709L11.4,20.95a.6908.6908,0,0,0,1.2,0l1.5-2A1.7651,1.7651,0,0,1,15.5,18.25H16c3.582,0,5.25-1.668,5.25-5.25V8c0-3.5815-1.668-5.25-5.25-5.25Z"
+              />
+              <path
+                class="cls-1"
+                d="M16.0059,12a1,1,0,0,1-.01-2h.01a1,1,0,1,1,0,2Z"
+              />
+              <path
+                class="cls-1"
+                d="M12.0044,12a1,1,0,0,1-.0088-2h.0088a1,1,0,0,1,0,2Z"
+              />
+              <path
+                class="cls-1"
+                d="M8.0034,12a1,1,0,0,1-.0088-2h.0088a1,1,0,1,1,0,2Z"
+              />
+            </svg>
           </div>
         </div>
 
@@ -101,8 +129,6 @@
         {{ post.content }}
       </p>
 
-      <!-- comment tplt -->
-      <!-- comment tplt -->
       <!-- edit Post tplt -->
       <div class="updatePost__relativeContainer">
         <div
@@ -146,6 +172,54 @@
         </div>
       </div>
       <!-- edit Post tplt -->
+      <!-- comment tplt -->
+      <div class="comment__section">
+        <div
+          v-if="this.post.Comments.length > 0"
+          class="comment__contentHeader "
+        >
+          <div class="comment__content--Title comment__user--Bold">
+            Comments
+          </div>
+        </div>
+        <Comment
+          v-for="comment in this.post.Comments"
+          :key="comment.id"
+          :comment="comment"
+          v-on:commentDeleted="handleCommentDeleted"
+        />
+        <div v-if="commentActive">
+          <div class="commentCreate__container">
+            <textarea
+              v-model="inputCreateComment"
+              class=" form-row__input"
+              :placeholder="`What do you think ` + [[loggedFirstname]] + `?`"
+              cols="30"
+              rows="1"
+              oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'
+            ></textarea>
+            <button @click="createComment()" class="button button__sendAnim">
+              <svg
+                class="button__icon button__send"
+                ixmlns="http://www.w3.org/2000/svg"
+                width="8.4667mm"
+                height="8.4667mm"
+                viewBox="0 0 24.0001 24.0001"
+              >
+                <path
+                  class="cls-1"
+                  d="M5.4072,21.7543a3.0806,3.0806,0,0,1-2.2827-.832c-.875-.876-1.5015-2.7529.4849-6.7178L4.48,12.473a1.2869,1.2869,0,0,0-.02-.9775l-.8516-1.7c-1.9849-3.9639-1.3569-5.84-.48-6.7168s2.7529-1.5054,6.7173.481l8.56,4.28C20.53,8.9017,21.7,10.3793,21.7,12s-1.17,3.0981-3.2949,4.1606l-8.56,4.28A10.2869,10.2869,0,0,1,5.4072,21.7543Zm0-18.0093a1.675,1.675,0,0,0-1.2187.394c-.7241.7241-.4395,2.5874.7612,4.9849l.8706,1.7407a2.8273,2.8273,0,0,1,.0186,2.24l-.89,1.7725c-1.2007,2.3975-1.4863,4.2607-.7642,4.9844s2.5879.4385,4.9888-.7627l8.561-4.28C19.3018,14.0355,20.2,13.0082,20.2,12s-.8984-2.0356-2.4648-2.8188l-8.561-4.28,0,0A9.1894,9.1894,0,0,0,5.4077,3.745Z"
+                />
+                <path
+                  class="cls-1"
+                  d="M10.84,12.75H5.44a.75.75,0,1,1,0-1.5h5.4a.75.75,0,0,1,0,1.5Z"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- comment tplt -->
     </div>
   </div>
   <!-- post tplt -->
@@ -157,11 +231,11 @@ import * as moment from "moment";
 import axios from "axios";
 
 // => Components
-// import CommentCta from "@/components/Comment-cta";
+import Comment from "@/components/Comment";
 
 export default {
   name: "Post",
-  components: {},
+  components: { Comment },
   data() {
     const loggedUser = localStorage.getItem("userId");
     const parsedUser = parseInt(loggedUser, 10);
@@ -177,6 +251,8 @@ export default {
       loggedUser: loggedUser,
       loggedFirstname: loggedFirstname,
       likeActive: likeActive,
+      commentActive: false,
+      inputCreateComment: "",
     };
   },
   props: ["post"],
@@ -225,7 +301,7 @@ export default {
           }
         );
         console.log(response);
-        this.$emit("loadPosts");
+        this.$emit("postUpdated");
       } catch (error) {
         this.errors.push(error);
       }
@@ -249,7 +325,7 @@ export default {
           });
 
           console.log(response);
-          this.$emit("loadPosts");
+          this.$emit("postUpdated");
         } catch (error) {
           this.errors.push(error);
         }
@@ -279,6 +355,44 @@ export default {
       } catch (error) {
         this.errors.push(error);
       }
+    },
+    toggleComment: async function() {
+      console.log("[=>] TOGGLE COMMENT Func.");
+
+      this.commentActive = !this.commentActive;
+    },
+    createComment: async function() {
+      console.log("[=>] CREATE COMMENT");
+
+      const newCommentContent = this.inputCreateComment;
+
+      const API_SERVER = "http://localhost:3000";
+
+      try {
+        const response = await axios.post(
+          API_SERVER + `/posts/${this.post.id}/comments`,
+          {
+            content: newCommentContent,
+          },
+          {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          }
+        );
+        console.log(response);
+
+        this.$emit("postUpdated");
+
+        // clear input comment content
+        this.inputCreateComment = "";
+        this.commentActive = false;
+      } catch (error) {
+        this.errors.push(error);
+      }
+    },
+    handleCommentDeleted: function() {
+      this.$emit("postUpdated");
     },
   },
 };
@@ -544,10 +658,52 @@ export default {
 }
 
 /* like section */
+.cta__public {
+  display: flex;
+}
 
 .like__container {
   width: var(--iconSize);
   height: var(--iconSize);
+  margin-right: var(--spaceSml);
+}
+
+.icon__comment {
+  animation: pop_out 0.45s cubic-bezier(0.86, 0, 0.07, 1);
+}
+
+.icon__comment--active {
+  fill: var(--greenLight);
+  animation: pop_in 0.45s cubic-bezier(0.86, 0, 0.07, 1);
+}
+
+@keyframes pop_in {
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(0.8);
+  }
+  50% {
+    transform: translateY(-2px) scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes pop_out {
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(0.8);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 .icon__tplt--like {
@@ -601,6 +757,31 @@ export default {
   100% {
     transform: scale(1);
   }
+}
+
+/* COMMENT SECTION */
+
+.comment__section {
+  margin-top: var(--spaceMed);
+}
+
+.comment__contentHeader {
+  display: flex;
+  margin-bottom: var(--spaceMed);
+}
+
+.comment__content--Title {
+  margin-right: var(--spaceSml);
+}
+
+.comment__user--Bold {
+  color: var(--darkgrey);
+  font-weight: 800;
+}
+
+.commentCreate__container {
+  margin-top: var(--spaceSml);
+  display: flex;
 }
 
 @media (max-width: 541px) {

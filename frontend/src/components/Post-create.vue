@@ -139,7 +139,7 @@ export default {
         console.log(response);
 
         // emits eventListener to parent "Home"
-        this.$emit("loadPosts");
+        this.$emit("postUpdated");
 
         // remove input datas
         const eraseTextInput = document.querySelector(
@@ -346,6 +346,7 @@ export default {
   background: white;
   border: 2px solid var(--greenLight);
 }
+
 .button {
   display: flex;
   justify-content: center;

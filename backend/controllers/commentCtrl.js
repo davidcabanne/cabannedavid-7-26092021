@@ -44,8 +44,10 @@ exports.updateOne = async function (req, res, next) {
 exports.deleteOne = async function (req, res, next) {
   console.log("=> DELETE Comment Function");
 
+  // contrôle d'accès, vérifier userID || admin req.comment.UserId req.User.isAdmin
+
   try {
-    const comment = await Comment.findByPk(req.params.id);
+    const comment = await Comment.findByPk(req.params.commentId);
     comment.destroy();
     res.status(200).end();
   } catch (error) {
