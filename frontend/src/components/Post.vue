@@ -69,7 +69,7 @@
           </div>
         </div>
 
-        <div v-if="loggedUser == this.post.UserId" class="cta__private">
+        <div v-if="authUpdatePost" class="cta__private">
           <div @click="toggleUpdatePost()" :key="post.id">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -132,16 +132,14 @@
       <!-- edit Post tplt -->
       <div class="updatePost__relativeContainer">
         <div
-          v-if="loggedUser == this.post.UserId"
+          v-if="authUpdatePost"
           class="updatePost__container"
           :class="{ 'toggleUpdateMenu--isActive': toggleUpdateMenuAnimation }"
         >
           <textarea
             v-model="inputCreatePost"
-            class=" form-row__input updatePost__eraseTextInput"
-            :placeholder="
-              `Would you like to update your post ` + loggedFirstname + `?`
-            "
+            class=" form-row__input--updatePost updatePost__eraseTextInput"
+            :placeholder="post.content"
             cols="30"
             rows="2"
             oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'
@@ -246,6 +244,9 @@ export default {
     const splittedUser = loggedUsername.split(" ");
     const loggedFirstname = splittedUser[0];
 
+    const admin = localStorage.getItem("admin");
+    const authUpdatePost = parsedUser == this.post.UserId || admin === "true";
+
     return {
       toggleUpdateMenuAnimation: false,
       loggedUser: loggedUser,
@@ -253,6 +254,7 @@ export default {
       likeActive: likeActive,
       commentActive: false,
       inputCreateComment: "",
+      authUpdatePost: authUpdatePost,
     };
   },
   props: ["post"],
@@ -601,6 +603,7 @@ export default {
   width: 80vw;
   min-width: 100px;
   padding: var(--spaceSml);
+  margin-left: calc(30px + 15px);
   /* styles */
   background: var(--light);
   border-radius: 8px;
@@ -617,6 +620,37 @@ export default {
 }
 
 .form-row__input:focus {
+  color: var(--darkgrey);
+  background: white;
+  border: 2px solid var(--greenLight);
+}
+
+.form-row__input--updatePost {
+  /* font opts */
+  font-family: Avenir;
+  color: var(--MedGrey);
+  font-size: var(--comment-firstFont);
+  font-weight: 500;
+  /* size specs */
+  width: 80vw;
+  min-width: 100px;
+  padding: var(--spaceSml);
+  /* styles */
+  background: var(--light);
+  border-radius: 8px;
+  border: 2px solid transparent;
+  /* text area opts */
+  outline: none;
+  resize: none;
+}
+
+.form-row__input--updatePost::placeholder {
+  width: 80vw;
+  color: var(--MedGrey);
+  padding: var(spaceSml);
+}
+
+.form-row__input--updatePost:focus {
   color: var(--darkgrey);
   background: white;
   border: 2px solid var(--greenLight);
@@ -780,8 +814,27 @@ export default {
 }
 
 .commentCreate__container {
-  margin-top: var(--spaceSml);
+  width: 80vw;
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: var(--spaceSml);
+  margin-bottom: var(--spaceSml);
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--greenLight);
+  color: white;
+  border-radius: 55px;
+  border: none;
+  width: 55px;
+  height: 55px;
+  padding: 16px;
+  margin-left: var(--spaceSml);
+  transition: 0.3s background-color;
 }
 
 @media (max-width: 541px) {
@@ -806,8 +859,13 @@ export default {
     width: 90vw;
   }
   .form-row__input,
+  .form-row__input--updatePost,
   .form-row__input::placeholder,
   .updatePost__footer {
+    width: 90vw;
+  }
+
+  .commentCreate__container {
     width: 90vw;
   }
 }

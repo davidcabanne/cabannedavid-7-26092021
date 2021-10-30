@@ -280,26 +280,23 @@ export default {
       }
     },
     showCustomProfile() {
-      const currentUser = localStorage.getItem("userId");
-      const profileUser = this.$route.params.id;
+      const loggedUserId = localStorage.getItem("userId");
+      const parsedUserId = parseInt(loggedUserId, 10);
+      const admin = localStorage.getItem("admin");
 
-      console.log(currentUser);
-      console.log(profileUser);
+      if (parsedUserId == this.$route.params.id || admin === "true") {
+        console.log("[=>] Good User!");
 
-      if (currentUser !== profileUser) {
+        return true;
+      } else {
         console.log("[=>] wrong User!");
 
         this.disableProfile = true;
 
         return false;
       }
-      console.log("[=>] Good User!");
+    },
 
-      return true;
-    },
-    callChild() {
-      this.$refs.childRef.childMethod("Rerender Userposts");
-    },
     loadProfile: async function() {
       const API_SERVER = "http://localhost:3000/users/";
 
@@ -337,29 +334,56 @@ export default {
     updateUser: async function() {
       console.log("[=>] UPDATE USER");
 
-      let updateUserId = localStorage.getItem("userId");
+      // UPDATED USERNAME
+      let updatedUsername = this.newUsername;
+      if (
+        this.newUsername === "" ||
+        this.newUsername === null ||
+        this.newUsername === undefined
+      ) {
+        updatedUsername = this.username;
+      }
+
+      // UPDATED EMAIL
+      let updatedEmail = this.newEmail;
+      if (
+        this.newEmail === "" ||
+        this.newEmail === null ||
+        this.newEmail === undefined
+      ) {
+        updatedEmail = this.email;
+      }
+
+      // UPDATED PICTURE
+      let updatedPicture = this.newPicture;
+      if (
+        this.newPicture === "" ||
+        this.newPicture === null ||
+        this.newPicture === undefined
+      ) {
+        updatedPicture = this.picture;
+      }
+
+      // UPDATED BIO
+      let updatedBio = this.newBio;
+      if (
+        this.newBio === "" ||
+        this.newBio === null ||
+        this.newBio === undefined
+      ) {
+        updatedBio = this.bio;
+      }
 
       const API_SERVER = "http://localhost:3000/users/";
 
-      let checkEmail = this.newEmail;
-      let checkUsername = this.newUsername;
-
       try {
-        if (checkEmail === undefined || checkEmail === null) {
-          checkEmail = this.email;
-        }
-        if (checkUsername === undefined || checkUsername === null) {
-          checkUsername = this.username;
-        }
-
         const response = await axios.put(
           API_SERVER + this.$route.params.id,
           {
-            id: updateUserId,
-            username: checkUsername,
-            email: checkEmail,
-            picture: this.newPicture,
-            bio: this.newBio,
+            username: updatedUsername,
+            email: updatedEmail,
+            picture: updatedPicture,
+            bio: updatedBio,
           },
           {
             headers: {
@@ -370,20 +394,24 @@ export default {
         this.newUser = response.data;
         console.log(this.newUser);
 
+        // toggle animation back to default
         this.toggleSettingsIconAnimation = false;
         this.toggleSettingsIconColor = false;
         this.toggleNavIcon = false;
         this.toggleMenuContainer = false;
 
+        // clear inputs
         this.newUsername = "";
-        this.newBio = "";
-        this.newPicture = "";
         this.newEmail = "";
+        this.newPicture = "";
+        this.newBio = "";
 
+        // re-render
         this.loadProfile();
-        this.callChild();
+        this.loadPosts();
       } catch (error) {
-        this.errors.push(error);
+        // this.errors.push(error);
+        console.log(error);
       }
     },
     toggleConfirm: function() {
@@ -452,10 +480,6 @@ export default {
       } catch (error) {
         this.errors.push(error);
       }
-    },
-    refreshPosts(payload) {
-      console.log(payload);
-      this.loadPosts();
     },
   },
   mounted() {
