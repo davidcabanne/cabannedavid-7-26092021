@@ -17,7 +17,7 @@
             </li>
             <li>
               <router-link
-                to="/home"
+                to="/search"
                 class="icon__search icon__transition"
               ></router-link>
             </li>

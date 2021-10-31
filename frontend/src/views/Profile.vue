@@ -773,6 +773,7 @@ svg {
 
 .settings__icon--isActive {
   transform: rotate(-180deg);
+  position: fixed;
 }
 .settings__icon--activeColor {
   fill: var(--greenLight);
@@ -1024,6 +1025,16 @@ svg {
 
   .userpost__wrapper {
     width: 90vw;
+  }
+}
+
+@media (max-width: 375px) {
+  .button {
+    width: 130px;
+    min-width: 100px;
+    max-width: var(--maxWidth);
+    height: 50px;
+    padding: 16px;
   }
 }
 </style>

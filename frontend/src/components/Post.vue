@@ -92,7 +92,7 @@
               />
             </svg>
           </div>
-          <div @click="deletePost()">
+          <div @click="toggleDeletePost()">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="8.4667mm"
@@ -124,6 +124,31 @@
           </div>
         </div>
       </div>
+
+      <transition name="fade">
+        <div
+          v-if="deleteActive"
+          class="deleteModal__container"
+          :class="{ 'deleteModal__container--isActive': deleteActive }"
+        >
+          <div class="deleteModal__wrapper">
+            <div class="deleteModal__content">
+              Are you sure you want to delete this post?
+            </div>
+            <div class="deleteModal__btnContainer">
+              <button @click="deletePost()" class="deleteModal__btn--confirm">
+                Yes
+              </button>
+              <button
+                @click="deleteActive = false"
+                class="deleteModal__btn--delete"
+              >
+                No
+              </button>
+            </div>
+          </div>
+        </div>
+      </transition>
 
       <p class="post__content--body">
         {{ post.content }}
@@ -255,6 +280,7 @@ export default {
       commentActive: false,
       inputCreateComment: "",
       authUpdatePost: authUpdatePost,
+      deleteActive: false,
     };
   },
   props: ["post"],
@@ -311,26 +337,26 @@ export default {
       // => reset form vue
       this.inputCreatePost = "";
     },
+    toggleDeletePost: function() {
+      console.log("[=>] TOGGLE DELETE POST");
+      this.deleteActive = !this.deleteActive;
+    },
     deletePost: async function() {
       console.log("[=>] DELETE POST");
 
-      let test = confirm("Are you sure you want to delete this post?");
-
       const API_SERVER = "http://localhost:3000/posts/";
 
-      if (test) {
-        try {
-          const response = await axios.delete(API_SERVER + this.post.id, {
-            headers: {
-              Authorization: "Bearer " + localStorage.getItem("token"),
-            },
-          });
+      try {
+        const response = await axios.delete(API_SERVER + this.post.id, {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        });
 
-          console.log(response);
-          this.$emit("postUpdated");
-        } catch (error) {
-          this.errors.push(error);
-        }
+        console.log(response);
+        this.$emit("postUpdated");
+      } catch (error) {
+        this.errors.push(error);
       }
     },
     likeFunction: async function() {
@@ -401,6 +427,103 @@ export default {
 </script>
 
 <style scoped lang="scss">
+/* deleteModal Sect. */
+.deleteModal__container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+  overflow: hidden;
+  z-index: 100;
+}
+
+.deleteModal__container::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--red);
+  opacity: 0.95;
+  z-index: -1;
+}
+
+.deleteModal__wrapper {
+  width: 80vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.deleteModal__content {
+  font-size: 40px;
+  font-weight: 900;
+  color: var(--light);
+  text-align: center;
+}
+
+.deleteModal__btnContainer {
+  width: 80vw;
+  display: flex;
+  flex-direction: column;
+  margin-top: var(--spaceLrg);
+}
+
+.deleteModal__btnContainer > * {
+  margin-bottom: var(--spaceMed);
+}
+.deleteModal__btnContainer:last-child {
+  margin-bottom: 00px;
+}
+
+.deleteModal__btn--confirm,
+.deleteModal__btn--delete {
+  border-radius: 8px;
+  font-weight: 800;
+  font-size: 15px;
+  color: var(--red);
+  border: none;
+  width: 100%;
+  padding: 16px;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+.deleteModal__btn--confirm:hover,
+.deleteModal__btn--delete:hover {
+  color: var(--light);
+  background: var(--greenLight);
+}
+
+.deleteModal__container--isActive {
+  opacity: 1;
+  animation: delete_in 0.3s ease-in-out;
+}
+
+@keyframes delete_in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+
 .post__content--Container {
   width: 90vw;
   display: flex;
@@ -866,6 +989,14 @@ export default {
   }
 
   .commentCreate__container {
+    width: 90vw;
+  }
+
+  .deleteModal__container {
+    border-radius: 0px;
+  }
+
+  .deleteModal__wrapper {
     width: 90vw;
   }
 }

@@ -171,10 +171,9 @@ export default {
 }
 
 .responsiveSpacer {
-  display: block;
   background: var(--light);
   width: 100vw;
-  height: 60px;
+  height: 30px;
 }
 
 @media (max-width: 541px) {
@@ -194,6 +193,8 @@ export default {
   }
 
   .responsiveSpacer {
+    display: block;
+    width: 100vw;
     background: var(--white);
     height: calc(60px + 20px);
   }

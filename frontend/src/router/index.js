@@ -4,6 +4,7 @@ import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
 import Signup from "../views/Signup.vue";
 import Profile from "../views/Profile.vue";
+import Search from "../views/Search.vue";
 
 const routes = [
   {
@@ -29,6 +30,12 @@ const routes = [
     name: "Profile",
     component: Profile,
     params: true,
+  },
+  {
+    path: "/search",
+    name: "Search",
+    component: Search,
+    props: true,
   },
 ];
 
