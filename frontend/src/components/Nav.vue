@@ -191,10 +191,10 @@ nav {
   background-image: url(../../images/icons/icon-linear/icon-profile.svg);
 }
 .icon__notifications {
-  background-image: url(../../images/icons/icon-linear/icon-notification.svg);
+  background-image: url(../../images/icons/icon-linear/icon-notification_white.svg);
 }
 .icon__logout {
-  background-image: url(../../images/icons/icon-linear/icon-logout.svg);
+  background-image: url(../../images/icons/icon-linear/icon-logout_white.svg);
 }
 .icon__home:hover,
 .icon__home.router-link-active,
@@ -222,10 +222,10 @@ nav {
   opacity: 0.5;
 }
 .icon__notifications:hover {
-  background-image: url(../../images/icons/icon-bold/notification.svg);
+  background-image: url(../../images/icons/icon-bold/notification_white.svg);
 }
 .icon__logout:hover {
-  background-image: url(../../images/icons/icon-bold/logout.svg);
+  background-image: url(../../images/icons/icon-bold/logout_white.svg);
 }
 /* ICONS SETTINGS ends here */
 

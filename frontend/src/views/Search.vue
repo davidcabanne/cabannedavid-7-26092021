@@ -1,12 +1,36 @@
 <template>
   <div class="homepage__onLoad"></div>
 
-  <div class="homepage__container">
-    <div class="search__header">
-      <div class="user__title">Who's there?</div>
+  <!-- nav -->
+  <div class="profilepage__nav__container">
+    <div class="profilepage__nav__wrapper">
+      <div class="profilepage__nav--icon">
+        <router-link to="/home" class=""
+          ><svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="8.4667mm"
+            height="8.4667mm"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M15,20.67a.7467.7467,0,0,1-.53-.22L7.95,13.93a2.7349,2.7349,0,0,1,0-3.86l6.52-6.52A.75.75,0,1,1,15.53,4.61L9.01,11.13a1.2354,1.2354,0,0,0,0,1.7393L15.53,19.39A.75.75,0,0,1,15,20.67Z"
+            />
+          </svg>
+        </router-link>
+      </div>
+      <input
+        v-model="searchText"
+        class="searchUser"
+        placeholder="Looking for someone?"
+      />
     </div>
+  </div>
+  <!-- nav -->
+
+  <div class="homepage__container">
     <div class="user__profileContainer">
-      <div v-for="user in users" :key="user.id" class="user__profile">
+      <div v-for="user in itemsSearched" :key="user.id" class="user__profile">
         <router-link :to="{ name: 'Profile', params: { id: user.id } }">
           <div class="user__pictureContainer">
             <img :src="user.picture" class="user__picture" />
@@ -26,9 +50,21 @@ export default {
   data() {
     return {
       users: [],
+      searchText: "",
     };
   },
   components: {},
+  computed: {
+    itemsSearched: function() {
+      var self = this;
+      if (this.searchText == "") {
+        return this.users;
+      }
+      return this.users.filter(function(user) {
+        return user.username.toLowerCase().indexOf(self.searchText) >= 0;
+      });
+    },
+  },
   methods: {
     loadUsers: async function() {
       const API_SERVER = "http://localhost:3000";
@@ -91,34 +127,81 @@ export default {
   }
 }
 
+/* NAV */
+.profilepage__nav__container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+}
+
+.profilepage__nav__wrapper {
+  width: 90vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.profilepage__nav--icon {
+  transition: opacity 0.2s ease-in-out;
+}
+
+.nav__icon {
+  fill: var(--light);
+  height: 30px;
+}
+
+.profilepage__nav--icon:hover {
+  opacity: 0.75;
+}
+
+.searchUser {
+  min-width: 100px;
+  height: 40px;
+  background: var(--light);
+  font-weight: 600;
+  color: var(--greenLight);
+  font-size: var(--body-firstFont);
+  border: none;
+  border-radius: 25px;
+  padding: 16px;
+}
+
+.searchUser::placeholder {
+  font-weight: 500;
+  color: var(--darkgrey);
+  opacity: 0.5;
+}
+
+.searchUser:focus {
+  opacity: 1;
+}
+
 .homepage__container {
   width: 100vw;
   min-height: 100vh;
   background: var(--greenLight);
-}
-
-.user__title {
-  position: fixed;
-  top: 0;
-  left: 0;
-  font-size: 10vw;
-  font-weight: 900;
-  color: var(--light);
-  margin-top: var(--spaceLrg);
-  margin-left: var(--spaceLrg);
-  z-index: 1000;
-  pointer-events: none;
+  padding-top: 100px;
 }
 
 .user__profileContainer {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
+}
+
+.user__profile,
+.user__pictureContainer {
+  width: 100vw;
+  height: 200px;
+  max-height: 50vh;
 }
 
 .user__profile {
-  width: 50vw;
-  height: 50vw;
-  max-height: 50vh;
   cursor: pointer;
   opacity: 0.5;
   transition: opacity 0.3s ease-in-out;
@@ -130,9 +213,6 @@ export default {
 
 .user__pictureContainer {
   position: relative;
-  width: 50vw;
-  height: 50vw;
-  max-height: 50vh;
   overflow: hidden;
 }
 

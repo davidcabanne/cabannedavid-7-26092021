@@ -44,7 +44,7 @@
           required
         />
       </div>
-      <div class="form-row" v-if="!checkInputs">
+      <div class="form-row form-row__required" v-if="!checkInputs">
         Tous les champs sont recquis !
       </div>
       <div class="form-row">
@@ -141,10 +141,17 @@ export default {
   min-width: 100px;
   color: black;
 }
+
 .form-row__input::placeholder {
   color: var(--greenLight);
   opacity: 0.5;
 }
+
+.form-row__required {
+  color: var(--red);
+  font-weight: 600;
+}
+
 .card {
   max-width: 90vw;
   width: 540px;

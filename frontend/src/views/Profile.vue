@@ -424,6 +424,7 @@ export default {
       deleteConfirm.classList.add("deleteUser__container--isActive");
     },
     removeToggleConfirm: function() {
+      // settings menu animation
       const deleteConfirm = document.querySelector(".deleteUser__container");
       deleteConfirm.classList.remove("deleteUser__container--isActive");
 
@@ -664,7 +665,19 @@ export default {
 }
 
 .post__container {
-  color: var(--darkgrey);
+  background: var(--white);
+  border-radius: 20px;
+  box-shadow: 5px 5px 16px 0 rgba(0, 0, 0, 0.15),
+    -8px -8px 12px 0 rgba(255, 255, 255, 0.1);
+  margin-top: var(--spaceMed);
+  // margin-bottom: var(--spaceMed);
+}
+
+.post__container:first-child {
+  margin-top: 0px;
+}
+.post__container:last-child {
+  margin-bottom: var(--spaceMed);
 }
 
 .userpost__container {
@@ -1021,6 +1034,12 @@ svg {
 
   .userpost__container {
     width: 100vw;
+  }
+
+  .post__container {
+    border-radius: 0px;
+    box-shadow: none;
+    border-top: 5px solid var(--light);
   }
 
   .userpost__wrapper {
