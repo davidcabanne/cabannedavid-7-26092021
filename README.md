@@ -21,28 +21,28 @@ Voici les exigences émises par le comité de pilotage :
 
 Le but est de créer le backend de l'application, le frontend étant déjà codé et fourni.
 
-[x] Utilisation d'un framework JavaScript au choix (VueJs)
-[x] Authentifier un utilisateur et maintenir sa session
-[x] Personnaliser le contenu envoyé à un client web
-[x] Gérer un stockage de données à l'aide de SQL
-[x] Implémenter un stockage de données sécurisé en utilisant SQL
-[x] Respecter les standards WCAG
+- [x] Utilisation d'un framework JavaScript au choix (VueJs)
+- [x] Authentifier un utilisateur et maintenir sa session
+- [x] Personnaliser le contenu envoyé à un client web
+- [x] Gérer un stockage de données à l'aide de SQL
+- [x] Implémenter un stockage de données sécurisé en utilisant SQL
+- [x] Respecter les standards WCAG
 
 ### Fonctionnalités
 
-[x] L'application est responsive
-[x] L'utilisateur peut créer son profil
-[x] L'utilisateur peut se logger et maintenir sa connection
-[x] L'utilisateur peut créer un post avec du texte et/ou une image
-[x] L'utilisateur peut modifier son post (text et/ou image)
-[x] L'utilisateur peut supprimer son post
-[x] L'utilisateur peut mettre à jour son profil (photo de profil, bio, email)
-[x] L'utilisateur peut supprimer son profil
-[x] L'utilisateur peut ajouter un "like" sur les publications
-[x] L'utilisateur peut supprimer ses "like"
-[x] L'utilisateur peut ajouter des commentaires sur les publications
-[x] L'utilisateur peut supprimer ses commentaires
-[x] L'administrateur peut modérer les posts, commentaires, et profils des utilisateurs
+- [x] L'application est responsive
+- [x] L'utilisateur peut créer son profil
+- [x] L'utilisateur peut se logger et maintenir sa connection
+- [x] L'utilisateur peut créer un post avec du texte et/ou une image
+- [x] L'utilisateur peut modifier son post (text et/ou image)
+- [x] L'utilisateur peut supprimer son post
+- [x] L'utilisateur peut mettre à jour son profil (photo de profil, bio, email)
+- [x] L'utilisateur peut supprimer son profil
+- [x] L'utilisateur peut ajouter un "like" sur les publications
+- [x] L'utilisateur peut supprimer ses "like"
+- [x] L'utilisateur peut ajouter des commentaires sur les publications
+- [x] L'utilisateur peut supprimer ses commentaires
+- [x] L'administrateur peut modérer les posts, commentaires, et profils des utilisateurs
 
 ### API REST
 
