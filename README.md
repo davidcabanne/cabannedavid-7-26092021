@@ -1,4 +1,4 @@
-![Image of Piiquante](https://user.oc-static.com/upload/2021/07/29/16275605596354_PiiquanteLogo.png)
+![Image of Groupomania](https://user.oc-static.com/upload/2019/09/04/15676009353158_image2.png)
 
 # [OCRs Projet 7] Créez un réseau social d’entreprise
 
