@@ -142,15 +142,18 @@ export default {
         this.$emit("postUpdated");
 
         // remove input datas
-        const eraseTextInput = document.querySelector(
-          ".post__create--eraseTextInput"
-        );
-        const eraseImgInput = document.querySelector(
-          ".post__create--eraseImgInput"
-        );
+        // const eraseTextInput = document.querySelector(
+        //   ".post__create--eraseTextInput"
+        // );
+        // const eraseImgInput = document.querySelector(
+        //   ".post__create--eraseImgInput"
+        // );
 
-        eraseTextInput.value = "";
-        eraseImgInput.value = "";
+        // eraseTextInput.value = "";
+        // eraseImgInput.value = "";
+
+        this.inputCreatePost = "";
+        this.inputImageUrl = "";
       } catch (error) {
         this.errors.push(error);
       }

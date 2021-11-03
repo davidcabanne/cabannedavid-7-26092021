@@ -458,6 +458,8 @@ export default {
       deleteUserCard.classList.toggle("deleteUserCard--isActive");
       messageContainer.innerHTML = `We're sad to see you go ${this.username}`;
 
+      const admin = localStorage.getItem("admin");
+
       const API_SERVER = "http://localhost:3000/users/";
 
       try {
@@ -472,12 +474,16 @@ export default {
 
         console.log(response);
 
-        // remove user from local storage
-        localStorage.removeItem("username");
-        localStorage.removeItem("userId");
-        localStorage.removeItem("token");
+        if (admin === "true") {
+          this.$router.push("/home");
+        } else {
+          // remove user from local storage
+          localStorage.removeItem("username");
+          localStorage.removeItem("userId");
+          localStorage.removeItem("token");
 
-        setTimeout(() => this.$router.push("/"), 3000);
+          setTimeout(() => this.$router.push("/"), 3000);
+        }
       } catch (error) {
         this.errors.push(error);
       }
