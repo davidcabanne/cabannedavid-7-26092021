@@ -19,7 +19,7 @@
   <div class="card__body">
     <div class="card">
       <div class="card__loginLogo">
-        <img src="../../images/logo-greenLight.svg" />
+        <img src="../../images/logo-red.svg" />
       </div>
       <h1 class="card__title">
         Hey,<br />
@@ -55,6 +55,7 @@
           @click="loginUser()"
           class="button"
           :class="{ 'button--disabled': !checkInputs }"
+          aria-label="login"
         >
           <span>Connexion</span>
         </button>

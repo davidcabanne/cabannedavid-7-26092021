@@ -8,7 +8,11 @@
             :to="{ name: 'Profile', params: { id: post.User.id } }"
             class="user__profileContainer"
           >
-            <img :src="post.User.picture" class="post__userPicture" />
+            <img
+              :src="post.User.picture"
+              class="post__userPicture"
+              alt="Post author picture"
+            />
             <span class="post__user--Bold user__profileLink">{{
               post.User.username
             }}</span></router-link
@@ -20,7 +24,7 @@
       </div>
 
       <div v-if="post.imageUrl.length > 0" class="img__container">
-        <img :src="post.imageUrl" alt="" />
+        <img :src="post.imageUrl" alt="Post picutre" />
       </div>
 
       <!-- like container -->
@@ -499,7 +503,7 @@ export default {
 .deleteModal__btn--confirm:hover,
 .deleteModal__btn--delete:hover {
   color: var(--light);
-  background: var(--greenLight);
+  background: var(--greenSecond);
 }
 
 .deleteModal__container--isActive {
@@ -581,7 +585,6 @@ export default {
 .post__user--BoldAlt {
   color: var(--darkgrey);
   font-weight: 800;
-  opacity: 0.5;
 }
 
 .user__profileContainer {

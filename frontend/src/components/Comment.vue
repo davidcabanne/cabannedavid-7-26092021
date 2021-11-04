@@ -6,7 +6,11 @@
           :to="{ name: 'Profile', params: { id: comment.UserId } }"
           class="comment__userContainer"
         >
-          <img :src="comment.User.picture" class="comment__userPicture" />
+          <img
+            :src="comment.User.picture"
+            class="comment__userPicture"
+            alt="Comment Author"
+          />
           <span class="comment__user--Bold">{{ comment.User.username }}</span>
         </router-link>
 
@@ -22,6 +26,7 @@
           @click="deleteComment"
           v-if="authUpdateComment"
           class="comment__btn--delete"
+          aria-label="delete comment"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -139,14 +144,12 @@ export default {
 .comment__user--BoldAlt {
   color: var(--darkgrey);
   font-weight: 800;
-  opacity: 0.5;
 }
 
 .comment__user--Regular {
   color: var(--darkgrey);
   font-size: var(--comment-firstFont);
   font-weight: 500;
-  opacity: 0.5;
 }
 
 .comment__content--header {

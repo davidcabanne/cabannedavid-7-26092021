@@ -12,7 +12,9 @@
   --darkgrey: #3d3c3e;
   --red: #d1515a;
   --blue: #091f43;
-  --greenLight: #6d9773;
+  // --greenLight: #6d9773;
+  --greenLight: #d1515a;
+  --greenSecond: #6d9773;
   --greenPrimary: #0c3b2e;
   --beige: #bb8a52;
   --yellow: #ffba00;

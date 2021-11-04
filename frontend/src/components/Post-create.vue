@@ -20,6 +20,7 @@
           <button
             @click.prevent="toggleImgInput('value1')"
             class="button button__custom button__imgAnim"
+            aria-label="toggle picture upload"
           >
             <svg
               class="button__icon button__img"
@@ -43,7 +44,7 @@
           <div class="button__inputContainer button__margin button__uploadAnim">
             <input type="file" id="actual-btn" hidden />
             <label for="actual-btn">Choose File</label>
-            <button class="button button__upload">
+            <button class="button button__upload" aria-label="upload picture">
               <svg
                 class="button__icon button__uploadIcon"
                 xmlns="http://www.w3.org/2000/svg"
@@ -73,7 +74,11 @@
 
           <!-- upload image sect -->
 
-          <button @click="createPost()" class="button button__sendAnim">
+          <button
+            @click="createPost()"
+            class="button button__sendAnim"
+            aria-label="create post"
+          >
             <svg
               class="button__icon button__send"
               ixmlns="http://www.w3.org/2000/svg"

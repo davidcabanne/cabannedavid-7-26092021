@@ -58,19 +58,39 @@ const Comment = sequelize.define("Comment", {
 
 const Like = sequelize.define("Like", {});
 
-User.hasMany(Post);
+User.hasMany(Post, {
+  foreignKey: {
+    allowNull: false,
+  },
+});
 Post.belongsTo(User);
 
-User.hasMany(Comment);
+User.hasMany(Comment, {
+  foreignKey: {
+    allowNull: false,
+  },
+});
 Comment.belongsTo(User);
 
-Post.hasMany(Comment);
+Post.hasMany(Comment, {
+  foreignKey: {
+    allowNull: false,
+  },
+});
 Comment.belongsTo(Post);
 
-Post.hasMany(Like);
+Post.hasMany(Like, {
+  foreignKey: {
+    allowNull: false,
+  },
+});
 Like.belongsTo(Post);
 
-User.hasMany(Like);
+User.hasMany(Like, {
+  foreignKey: {
+    allowNull: false,
+  },
+});
 Like.belongsTo(User);
 
 module.exports = { sequelize, User, Post, Comment, Like };

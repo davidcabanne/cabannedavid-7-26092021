@@ -1,7 +1,7 @@
 <template>
   <div class="nav__container">
     <nav>
-      <router-link to="/home"
+      <router-link to="/home" aria-label="Groupomania Logo"
         ><div href="index.html" class="nav__logocontainer"></div
       ></router-link>
 
@@ -13,24 +13,28 @@
                 @click="scrollToTop()"
                 to="/home"
                 class="icon__home icon__transition icon__mobile"
+                aria-label="Back to top"
               ></router-link>
             </li>
             <li>
               <router-link
                 to="/search"
                 class="icon__search icon__transition"
+                aria-label="Browse or search our users"
               ></router-link>
             </li>
             <li>
               <router-link
                 to="/home"
                 class="icon__message icon__transition"
+                aria-label="Send a message"
               ></router-link>
             </li>
             <li>
               <router-link
                 :to="{ name: 'Profile', params: { id: userId } }"
                 class="icon__profile icon__transition"
+                aria-label="Go to my profile"
               ></router-link>
             </li>
           </ul>
@@ -41,6 +45,7 @@
               <router-link
                 to="/home"
                 class="icon__notifications icon__transition"
+                aria-label="Notifications"
               ></router-link>
             </li>
             <li>
@@ -48,6 +53,7 @@
                 @click="logoutUser()"
                 to="/"
                 class="icon__logout icon__transition"
+                aria-label="Logout"
               ></router-link>
             </li>
           </ul>
@@ -109,7 +115,7 @@ nav {
 .nav__logocontainer {
   height: 60px;
   width: 200px;
-  background-image: url(../../images/logo-greenLight.svg);
+  background-image: url(../../images/logo-red.svg);
   background-repeat: no-repeat;
   background-position: center;
   transition: background-image 0.2s ease-in-out;

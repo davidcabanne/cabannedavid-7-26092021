@@ -2,7 +2,7 @@
   <div class="card__body">
     <div class="card">
       <div class="card__loginLogo">
-        <img src="../../images/logo-greenLight.svg" />
+        <img src="../../images/icon-above-font-01.svg" />
       </div>
       <h1 class="card__title">
         Hey<span v-if="username" class="card__title--username">{{
@@ -54,6 +54,7 @@
           :class="{ 'button--disabled': !signUp }"
           type="submit"
           value="Créer mon compte"
+          aria-label="sign-up"
         />
       </div>
     </div>

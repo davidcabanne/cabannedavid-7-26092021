@@ -7,7 +7,7 @@
       class="profilepage__nav--icon"
       :class="{ 'profilepage__nav--icon--isActive': toggleNavIcon }"
     >
-      <router-link to="/home" class=""
+      <router-link to="/home" class="" aria-label="Back to home"
         ><svg
           xmlns="http://www.w3.org/2000/svg"
           width="8.4667mm"
@@ -458,7 +458,9 @@ export default {
       deleteUserCard.classList.toggle("deleteUserCard--isActive");
       messageContainer.innerHTML = `We're sad to see you go ${this.username}`;
 
-      const admin = localStorage.getItem("admin");
+      const loggedUser = localStorage.getItem("userId");
+      // const parsedUser = parseInt(loggedUser, 10);
+      // const admin = localStorage.getItem("admin");
 
       const API_SERVER = "http://localhost:3000/users/";
 
@@ -474,15 +476,15 @@ export default {
 
         console.log(response);
 
-        if (admin === "true") {
-          this.$router.push("/home");
-        } else {
+        if (loggedUser === this.$route.params.id) {
           // remove user from local storage
           localStorage.removeItem("username");
           localStorage.removeItem("userId");
           localStorage.removeItem("token");
 
           setTimeout(() => this.$router.push("/"), 3000);
+        } else {
+          this.$router.push("/home");
         }
       } catch (error) {
         this.errors.push(error);
@@ -881,7 +883,7 @@ svg {
 }
 
 .btn__updateUser {
-  background: var(--greenLight);
+  background: var(--greenSecond);
 }
 
 .btn__updateUser:hover {
@@ -893,7 +895,7 @@ svg {
 }
 
 .btn__deleteUser:hover {
-  opacity: 0.5;
+  background: var(--darkgrey);
 }
 
 .deleteUser__container {
