@@ -115,7 +115,7 @@ nav {
 .nav__logocontainer {
   height: 60px;
   width: 200px;
-  background-image: url(../../images/logo-red.svg);
+  background-image: url(../../images/logo-greenLight.svg);
   background-repeat: no-repeat;
   background-position: center;
   transition: background-image 0.2s ease-in-out;

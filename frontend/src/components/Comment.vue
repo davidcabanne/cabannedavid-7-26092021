@@ -175,6 +175,7 @@ export default {
 
 .comment__date {
   height: var(--spaceMed);
+  color: var(--MedGrey);
 }
 
 .comment__textContent {
@@ -270,6 +271,6 @@ export default {
 }
 
 .comment__icon--delete:hover {
-  fill: var(--red);
+  fill: var(--greenLight);
 }
 </style>

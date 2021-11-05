@@ -19,7 +19,7 @@
   <div class="card__body">
     <div class="card">
       <div class="card__loginLogo">
-        <img src="../../images/logo-red.svg" />
+        <img src="../../images/logo-greenLight.svg" />
       </div>
       <h1 class="card__title">
         Hey,<br />

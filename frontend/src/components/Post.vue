@@ -483,6 +483,7 @@ export default {
 .deleteModal__btnContainer > * {
   margin-bottom: var(--spaceMed);
 }
+
 .deleteModal__btnContainer:last-child {
   margin-bottom: 00px;
 }
@@ -503,7 +504,7 @@ export default {
 .deleteModal__btn--confirm:hover,
 .deleteModal__btn--delete:hover {
   color: var(--light);
-  background: var(--greenSecond);
+  background: var(--greenLight);
 }
 
 .deleteModal__container--isActive {
@@ -524,6 +525,7 @@ export default {
 .fade-leave-active {
   transition: opacity 0.5s;
 }
+
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
 }
@@ -535,9 +537,11 @@ export default {
   align-items: center;
   padding: var(--spaceMed) 0px var(--spaceMed) 0px;
 }
+
 .post__content--Wrapper {
   width: 80vw;
 }
+
 .post__content--body {
   color: var(--darkgrey);
   font-weight: 500;
@@ -583,7 +587,7 @@ export default {
 }
 
 .post__user--BoldAlt {
-  color: var(--darkgrey);
+  color: var(--MedGrey);
   font-weight: 800;
 }
 
@@ -984,6 +988,7 @@ export default {
   .cta__container {
     width: 90vw;
   }
+
   .form-row__input,
   .form-row__input--updatePost,
   .form-row__input::placeholder,
